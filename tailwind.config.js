@@ -5,6 +5,9 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
+    fontFamily: {
+      sans: ['Roboto Mono', 'sans-serif'],
+    },
     extend: {},
   },
   plugins: [],
