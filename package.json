@@ -10,13 +10,19 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.0",
+    "classnames": "^2.3.1",
+    "framer-motion": "^6.2.8",
     "next": "12.1.0",
+    "next-redux-wrapper": "^7.0.5",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-redux": "^7.2.6"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
     "@types/react": "17.0.41",
+    "@types/react-redux": "^7.1.23",
     "autoprefixer": "^10.4.4",
     "commitlint": "^16.2.3",
     "commitlint-config-gitmoji": "^2.2.5",
