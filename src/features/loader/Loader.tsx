@@ -29,7 +29,7 @@ const Loader: React.VoidFunctionComponent<LoaderProps> = ({
   return (
     <AnimatePresence>
       <Charming delay={0.1} onCharmingComplete={() => dispatch(start())}>
-        <h1 className="font-sans text-lg font-normal text-red-700 ml-10 mt-12">
+        <h1 className="fixed left-10 top-12 font-sans text-lg font-normal text-red-700">
           {state.value.toString()}
         </h1>
       </Charming>

@@ -37,22 +37,7 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
     <>
       {!isMobile && (
         <motion.div
-          className={classNames(
-            'pointer-events-none',
-            'absolute',
-            'top-[-47.5px]',
-            'left-[-47.5px]',
-            'z-10',
-            'flex',
-            'h-[95px]',
-            'w-[95px]',
-            'origin-center',
-            'items-center',
-            'justify-center',
-            'overflow-visible',
-            'rounded-full',
-            { 'scale-100 opacity-20': state.isStuck },
-          )}
+          className="pointer-events-none absolute top-[-47.5px] left-[-47.5px] z-10 flex h-[95px] w-[95px] origin-center items-center justify-center overflow-visible rounded-full"
           initial={{
             opacity: 0,
           }}
@@ -63,9 +48,20 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
           transition={{ ease: easingFunction, duration: state.speed }}
         >
           <span
-            className="absolute -z-20 h-full w-full origin-[50%_50%] 
-        scale-[0.2] rounded-full bg-red-700 
-        transition-all duration-[350ms] ease-in-out"
+            className={classNames(
+              'absolute',
+              '-z-20',
+              'h-full',
+              'w-full',
+              'origin-[50%_50%]',
+              'rounded-full',
+              'bg-red-700',
+              'transition-all',
+              'duration-[350ms]',
+              'ease-in-out',
+              { 'scale-100 opacity-40': state.isStuck },
+              { 'scale-[0.2]': !state.isStuck },
+            )}
           ></span>
         </motion.div>
       )}
