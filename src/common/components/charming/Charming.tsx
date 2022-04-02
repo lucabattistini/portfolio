@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useMemo } from 'react';
 import { motion } from 'framer-motion';
 
-export interface ICharmingProps {
+export interface CharmingProps {
   delay?: number;
   exitEaseFunction?: string | number[];
   mountEaseFunction?: string | number[];
@@ -9,14 +9,14 @@ export interface ICharmingProps {
   pattern?: RegExp;
 }
 
-const Charming: React.FunctionComponent<PropsWithChildren<ICharmingProps>> = ({
+const Charming: React.FunctionComponent<PropsWithChildren<CharmingProps>> = ({
   children = undefined,
-  delay = 0.05,
+  delay = 50,
   exitEaseFunction = [0.22, 1, 0.36, 1],
   mountEaseFunction = [0.64, 0, 0.78, 0],
   onCharmingComplete = undefined,
   pattern = new RegExp(''),
-}: PropsWithChildren<ICharmingProps>) => {
+}) => {
   const charmed = useMemo(() => {
     const traverse = (element: string | React.ReactElement, index?: number) => {
       if (typeof element === 'string') {
@@ -33,7 +33,7 @@ const Charming: React.FunctionComponent<PropsWithChildren<ICharmingProps>> = ({
               animate={{
                 opacity: 1,
                 transition: {
-                  delay: index * delay,
+                  delay: index * (delay / 1000),
                   duration: 0.1,
                   ease: mountEaseFunction,
                 },
@@ -41,7 +41,7 @@ const Charming: React.FunctionComponent<PropsWithChildren<ICharmingProps>> = ({
               exit={{
                 opacity: 0,
                 transition: {
-                  delay: (letters.length - index) * delay,
+                  delay: (letters.length - index) * (delay / 1000),
                   duration: 0.1,
                   ease: exitEaseFunction,
                 },
@@ -49,7 +49,9 @@ const Charming: React.FunctionComponent<PropsWithChildren<ICharmingProps>> = ({
               onAnimationComplete={() => {
                 if (letters.length - 1 === index) {
                   if (onCharmingComplete !== undefined) {
-                    onCharmingComplete();
+                    setTimeout(() => {
+                      onCharmingComplete();
+                    }, delay);
                   }
                 }
               }}

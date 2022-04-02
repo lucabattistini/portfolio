@@ -3,7 +3,7 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Charming from '../../common/components/charming/Charming';
 import useInterval from '../../common/hooks/useInterval';
-import { selectLoaderState, setValue, start, stop } from './loaderSlice';
+import { complete, selectLoaderState, setValue, start, stop } from './loaderSlice';
 
 export interface LoaderProps {
   maxValue?: number;
@@ -23,16 +23,18 @@ const Loader: React.VoidFunctionComponent<LoaderProps> = ({
         dispatch(stop());
       }
     },
-    state.isLoading ? 100 : null,
+    state.isLoading ? 125 : null,
   );
 
   return (
-    <AnimatePresence>
-      <Charming delay={0.1} onCharmingComplete={() => dispatch(start())}>
-        <h1 className="fixed left-10 top-12 font-sans text-lg font-normal text-red-700">
-          {state.value.toString()}
-        </h1>
-      </Charming>
+    <AnimatePresence onExitComplete={() => dispatch(complete())}>
+      {!state.shouldExit && (
+        <Charming delay={125} onCharmingComplete={() => dispatch(start())}>
+          <h1 className="fixed left-10 top-12 font-sans text-lg font-normal text-red-700">
+            {state.value.toString()}
+          </h1>
+        </Charming>
+      )}
     </AnimatePresence>
   );
 };

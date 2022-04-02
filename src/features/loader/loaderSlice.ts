@@ -4,6 +4,7 @@ import { RootState } from '../../app/store';
 export interface LoaderState {
   isCompleted: boolean;
   isLoading: boolean;
+  shouldExit: boolean;
   step: number;
   value: number;
 }
@@ -13,10 +14,14 @@ export const loaderSlice = createSlice({
   initialState: {
     isCompleted: false,
     isLoading: false,
+    shouldExit: false,
     step: 1,
     value: 1993,
   },
   reducers: {
+    complete: (state) => {
+      state.isCompleted = true;
+    },
     setValue: (state: LoaderState, action: PayloadAction<number>) => {
       state.value = action.payload;
     },
@@ -25,11 +30,11 @@ export const loaderSlice = createSlice({
     },
     stop: (state) => {
       state.isLoading = false;
-      state.isCompleted = true;
+      state.shouldExit = true;
     },
   },
 });
 
-export const { setValue, start, stop } = loaderSlice.actions;
+export const { complete, setValue, start, stop } = loaderSlice.actions;
 export const selectLoaderState = (state: RootState): LoaderState => state.loader;
 export default loaderSlice.reducer;
