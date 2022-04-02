@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import useMedia from '../../common/hooks/useMedia';
+import useMobileDetect from '../../common/hooks/useDeviceDetect';
 import useMousePosition from '../../common/hooks/useMousePosition';
 import { selectCursorState, setPosition, setSpeed, showCursor } from './cursorSlice';
 
@@ -15,13 +15,15 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
 
   const mousePosition = useMousePosition();
 
-  const isMobile = useMedia('(max-width: 768px)');
+  const isMobile = useMobileDetect();
 
   const dispach = useAppDispatch();
 
   useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+
     if (state.isVisible === false) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         dispach(setSpeed(0.2));
       }, 100);
 
@@ -31,6 +33,8 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
     if (state.isStuck === false) {
       dispach(setPosition(mousePosition));
     }
+
+    return () => clearTimeout(timer);
   }, [mousePosition]);
 
   return (
