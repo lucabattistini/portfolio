@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import useMobileDetect from '../../common/hooks/useDeviceDetect';
+import useMobileDetect from '../../common/hooks/useMobileDetect';
 import useMousePosition from '../../common/hooks/useMousePosition';
 import { selectCursorState, setPosition, setSpeed, showCursor } from './cursorSlice';
 
