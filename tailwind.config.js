@@ -14,9 +14,14 @@ module.exports = {
           '0%, 10%': { transform: 'rotate(0deg)' },
           '5%': { transform: 'rotate(20deg)' },
         },
+        back: {
+          '0%, 10%': { transform: 'translateX(0)' },
+          '5%': { transform: 'translateX(-12px)' },
+        },
       },
       animation: {
         hello: 'hello 5s ease-in-out infinite',
+        back: 'back 5s ease-in-out infinite',
       },
     },
   },
