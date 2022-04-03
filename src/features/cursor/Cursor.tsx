@@ -41,7 +41,22 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
     <>
       {!isMobile && (
         <motion.div
-          className="pointer-events-none absolute top-[-47.5px] left-[-47.5px] z-10 flex h-[95px] w-[95px] origin-center items-center justify-center overflow-visible rounded-full"
+          className={classNames(
+            'pointer-events-none',
+            'absolute',
+            '-top-10',
+            '-left-10',
+            'z-10',
+            'flex',
+            'h-20',
+            'w-20',
+            'origin-center',
+            'items-center',
+            'justify-center',
+            'overflow-visible',
+            'rounded-full',
+            { 'mix-blend-overlay': state.isHovered },
+          )}
           initial={{
             opacity: 0,
           }}
@@ -59,12 +74,12 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
               'w-full',
               'origin-[50%_50%]',
               'rounded-full',
-              'bg-red-700',
               'transition-all',
               'duration-[350ms]',
               'ease-in-out',
-              { 'scale-100 opacity-40': state.isStuck },
-              { 'scale-[0.2]': !state.isStuck },
+              { 'bg-red-700 scale-100 opacity-40': state.isStuck },
+              { 'bg-red-700 scale-[0.25]': !state.isStuck },
+              { 'bg-stone-900': state.isHovered },
             )}
           ></span>
         </motion.div>

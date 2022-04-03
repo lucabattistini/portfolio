@@ -4,7 +4,8 @@ import Head from 'next/head';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Charming from '../common/components/charming/Charming';
 import Cursor from '../features/cursor/Cursor';
-import { stick, unstick } from '../features/cursor/cursorSlice';
+import { hover, stick, unhover, unstick } from '../features/cursor/cursorSlice';
+import { computeStuckCoordinates } from '../features/cursor/cursorUtils';
 import Loader from '../features/loader/Loader';
 import { selectLoaderState } from '../features/loader/loaderSlice';
 
@@ -33,17 +34,41 @@ const Home: NextPage = () => {
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
                 className="flex items-center leading-none relative"
+                onMouseEnter={() => dispatch(hover())}
+                onMouseLeave={() => dispatch(unhover())}
               >
                 <Charming delay={125}>
-                  <h1 className="font-sans text-lg font-normal text-red-700">luca battistini</h1>
+                  <h1 className="font-sans text-lg font-normal text-red-700 select-none">
+                    luca battistini
+                  </h1>
                 </Charming>
               </motion.div>
             </div>
+
+            <div className="flex-none w-full mt-auto mb-8">
+              <motion.div
+                initial={{ opacity: 0, left: '-12px' }}
+                animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
+                className="flex items-center leading-none relative max-w-xs"
+                onMouseEnter={() => dispatch(hover())}
+                onMouseLeave={() => dispatch(unhover())}
+              >
+                <Charming delay={50}>
+                  <p className="font-sans text-base font-normal text-red-700 select-none">
+                    i am an italian born and raised frontend developer who tries to make the www a
+                    better place
+                  </p>
+                </Charming>
+              </motion.div>
+            </div>
+
             <div className="flex items-center flex-none mt-auto w-full">
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
-                className="flex items-center leading-none relative"
+                className="flex items-center leading-none relative select-none"
+                onMouseEnter={() => dispatch(hover())}
+                onMouseLeave={() => dispatch(unhover())}
               >
                 <span className="text-stone-600 mr-3 py-px">he</span>
                 <hr className="bg-stone-600 w-px h-5 mr-3 rotate-[22.5deg] border-0" />
@@ -53,12 +78,14 @@ const Home: NextPage = () => {
               <motion.a
                 initial={{ opacity: 0, right: '-12px' }}
                 animate={{ opacity: 1, right: 0, transition: { duration: 0.5 } }}
-                className="flex ml-auto relative"
+                className="flex ml-auto relative select-none"
                 href="mailto:hello@lucabattistini.dev"
-                onMouseEnter={() => dispatch(stick())}
+                onMouseEnter={(e) =>
+                  dispatch(stick(computeStuckCoordinates(e.currentTarget.getBoundingClientRect())))
+                }
                 onMouseLeave={() => dispatch(unstick())}
               >
-                <span className="inline-flex animate-hello origin-[90%_100%] px-2">👋</span>
+                <span className="inline-flex animate-hello origin-[90%_100%] mr-2">👋</span>
                 <Charming delay={100}>
                   <span className="text-stone-600">say hello</span>
                 </Charming>

@@ -3,6 +3,7 @@ import { RootState } from '../../app/store';
 import { MousePosition } from '../../common/hooks/useMousePosition';
 
 export interface CursorState {
+  isHovered: boolean;
   isStuck: boolean;
   isVisible: boolean;
   position: MousePosition;
@@ -12,11 +13,12 @@ export interface CursorState {
 export const cursorSlice = createSlice({
   name: 'cursor',
   initialState: {
+    isHovered: false,
     isStuck: false,
     isVisible: false,
     position: {
-      x: -95,
-      y: -95,
+      x: -80,
+      y: -80,
     },
     speed: 0,
   },
@@ -30,15 +32,26 @@ export const cursorSlice = createSlice({
     showCursor: (state) => {
       state.isVisible = true;
     },
-    stick: (state) => {
+    stick: (state: CursorState, action: PayloadAction<MousePosition>) => {
       state.isStuck = true;
+      state.position = {
+        x: action.payload.x,
+        y: action.payload.y,
+      };
     },
     unstick: (state) => {
       state.isStuck = false;
     },
+    hover: (state) => {
+      state.isHovered = true;
+    },
+    unhover: (state) => {
+      state.isHovered = false;
+    },
   },
 });
 
-export const { setPosition, setSpeed, showCursor, stick, unstick } = cursorSlice.actions;
+export const { hover, setPosition, setSpeed, showCursor, stick, unstick, unhover } =
+  cursorSlice.actions;
 export const selectCursorState = (state: RootState): CursorState => state.cursor;
 export default cursorSlice.reducer;
