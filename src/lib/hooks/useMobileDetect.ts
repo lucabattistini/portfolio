@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useMobileDetect() {
+export const useMobileDetect = () => {
   const [isMobile, setMobile] = useState(false);
 
   useEffect(() => {
@@ -12,4 +12,4 @@ export default function useMobileDetect() {
   }, []);
 
   return isMobile;
-}
+};

@@ -1,4 +1,4 @@
-import { MousePosition } from '../../common/hooks/useMousePosition';
+import { MousePosition } from '../../lib/hooks/useMousePosition';
 
 export const computeStuckCoordinates = (rect: DOMRect): MousePosition => {
   return {

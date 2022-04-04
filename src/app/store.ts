@@ -3,12 +3,14 @@ import { createWrapper } from 'next-redux-wrapper';
 
 import cursorReducer from '../features/cursor/cursorSlice';
 import loaderReducer from '../features/loader/loaderSlice';
+import particlesReducer from '../features/particles/particlesSlice';
 
 export const makeStore = () =>
   configureStore({
     reducer: {
       cursor: cursorReducer,
       loader: loaderReducer,
+      particles: particlesReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   });

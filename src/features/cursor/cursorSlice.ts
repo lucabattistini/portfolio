@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { MousePosition } from '../../common/hooks/useMousePosition';
+import { MousePosition } from '../../lib/hooks/useMousePosition';
 
 export interface CursorState {
   isHovered: boolean;

@@ -2,7 +2,7 @@ import { AnimatePresence } from 'framer-motion';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Charming from '../../common/components/charming/Charming';
-import useInterval from '../../common/hooks/useInterval';
+import { useInterval } from '../../lib/hooks';
 import { complete, selectLoaderState, setValue, start, stop } from './loaderSlice';
 
 export interface LoaderProps {

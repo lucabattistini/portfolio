@@ -8,16 +8,15 @@ import { hover, stick, unhover, unstick } from '../features/cursor/cursorSlice';
 import { computeStuckCoordinates } from '../features/cursor/cursorUtils';
 import Loader from '../features/loader/Loader';
 import { selectLoaderState } from '../features/loader/loaderSlice';
+import Particles from '../features/particles/Particles';
+import { explode, unexplode } from '../features/particles/particlesSlice';
 
 const Home: NextPage = () => {
   const loaderState = useAppSelector(selectLoaderState);
   const dispatch = useAppDispatch();
 
   return (
-    <motion.div
-      className="font-sans bg-stone-900 flex h-screen overflow-hidden relative cursor-none"
-      layout
-    >
+    <motion.div className="font-sans bg-stone-900 flex h-screen overflow-hidden relative" layout>
       <Head>
         <title>luca battistini — frontend developer</title>
         <link rel="icon" href="/favicon.ico" />
@@ -28,12 +27,12 @@ const Home: NextPage = () => {
       ) : (
         <>
           <Cursor />
-          <main className="fixed left-0 top-0 h-screen w-full flex flex-col items-start px-10 py-12 cursor-auto">
+          <main className="fixed left-0 top-0 h-screen w-full flex flex-col items-start px-10 py-12 z-10 pointer-events-none">
             <div className="flex items-center flex-none">
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
-                className="flex items-center leading-none relative"
+                className="flex items-center leading-none relative pointer-events-auto"
                 onMouseEnter={() => dispatch(hover())}
                 onMouseLeave={() => dispatch(unhover())}
               >
@@ -49,7 +48,7 @@ const Home: NextPage = () => {
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
-                className="flex items-center leading-none relative max-w-xs"
+                className="flex items-center leading-none relative max-w-xs pointer-events-auto"
                 onMouseEnter={() => dispatch(hover())}
                 onMouseLeave={() => dispatch(unhover())}
               >
@@ -66,7 +65,7 @@ const Home: NextPage = () => {
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
-                className="flex items-center leading-none relative select-none"
+                className="flex items-center leading-none relative select-none pointer-events-auto"
                 onMouseEnter={() => dispatch(hover())}
                 onMouseLeave={() => dispatch(unhover())}
               >
@@ -78,12 +77,16 @@ const Home: NextPage = () => {
               <motion.a
                 initial={{ opacity: 0, right: '-12px' }}
                 animate={{ opacity: 1, right: 0, transition: { duration: 0.5 } }}
-                className="flex ml-auto relative select-none"
+                className="flex ml-auto relative select-none pointer-events-auto"
                 href="mailto:hello@lucabattistini.dev"
-                onMouseEnter={(e) =>
-                  dispatch(stick(computeStuckCoordinates(e.currentTarget.getBoundingClientRect())))
-                }
-                onMouseLeave={() => dispatch(unstick())}
+                onMouseEnter={(e) => {
+                  dispatch(stick(computeStuckCoordinates(e.currentTarget.getBoundingClientRect())));
+                  dispatch(explode());
+                }}
+                onMouseLeave={() => {
+                  dispatch(unstick());
+                  dispatch(unexplode());
+                }}
               >
                 <span className="inline-flex animate-hello origin-[90%_100%] mr-2">👋</span>
                 <Charming delay={100}>
@@ -92,6 +95,7 @@ const Home: NextPage = () => {
               </motion.a>
             </div>
           </main>
+          <Particles colorThreshold={34} picture="/me.png" />
         </>
       )}
     </motion.div>
