@@ -22,7 +22,7 @@ uniform sampler2D uTouch;
 varying vec2 vPUv;
 varying vec2 vUv;
 
-#pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
+#pragma glslify: snoise2 = require('glsl-noise/simplex/2d');
 
 float random(float n) {
 	return fract(sin(n) * 43758.5453123);

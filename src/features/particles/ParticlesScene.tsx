@@ -1,7 +1,7 @@
-import { useCallback, useEffect, VoidFunctionComponent } from 'react';
+import { useCallback, useEffect, useRef, VoidFunctionComponent } from 'react';
 import { useTexture } from '@react-three/drei';
 import { ThreeEvent, useFrame, useThree } from '@react-three/fiber';
-import { Color, PerspectiveCamera } from 'three';
+import { Color, InstancedBufferGeometry, Mesh, PerspectiveCamera, RawShaderMaterial } from 'three';
 import usePoints from './usePoints';
 import { ParticlesProps } from './Particles';
 import { animate, useMotionValue } from 'framer-motion';
@@ -23,10 +23,9 @@ const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
     return fovHeight / texture.image.height;
   });
 
-  const { pointsMaterialRef, pointsGeometryRef, pointerTexture } = usePoints(
-    texture,
-    colorThreshold,
-  );
+  const { shaders, pointerTexture } = usePoints(texture, colorThreshold);
+
+  const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial>>();
 
   const uSize = useMotionValue(0.5);
 
@@ -38,18 +37,18 @@ const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
 
   const handleOnMove = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
-      if (pointerTexture && e.intersections.length > 0) {
+      if (shaders && e.intersections.length > 0) {
         if (e.intersections[0].uv) {
           pointerTexture.addPoint(e.intersections[0].uv);
         }
       }
     },
-    [pointerTexture],
+    [shaders],
   );
 
   useEffect(() => {
-    if (pointsMaterialRef.current && pointerTexture) {
-      pointsMaterialRef.current.uniforms.uTouch.value = pointerTexture.texture;
+    if (meshRef.current && shaders && pointerTexture) {
+      meshRef.current.material.uniforms.uTouch.value = pointerTexture.texture;
     }
 
     dispatch(showParticles());
@@ -105,11 +104,11 @@ const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
   }, [state.isExploded]);
 
   useFrame((threeState, clockDelta) => {
-    if (pointsMaterialRef.current && Object.keys(pointsMaterialRef.current.uniforms).length > 0) {
-      pointsMaterialRef.current.uniforms.uSize.value = uSize.get();
-      pointsMaterialRef.current.uniforms.uRandom.value = uRandom.get();
-      pointsMaterialRef.current.uniforms.uDepth.value = uDepth.get();
-      pointsMaterialRef.current.uniforms.uTime.value += clockDelta;
+    if (shaders && meshRef.current && Object.keys(meshRef.current.material.uniforms).length > 0) {
+      meshRef.current.material.uniforms.uSize.value = uSize.get();
+      meshRef.current.material.uniforms.uRandom.value = uRandom.get();
+      meshRef.current.material.uniforms.uDepth.value = uDepth.get();
+      meshRef.current.material.uniforms.uTime.value += clockDelta;
 
       pointerTexture.update();
     }
@@ -117,9 +116,24 @@ const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
 
   return (
     <>
-      <mesh scale={[scale, scale, 1]}>
-        <rawShaderMaterial ref={pointsMaterialRef} attach="material" />
-        <instancedBufferGeometry ref={pointsGeometryRef} attach="geometry" />
+      <mesh ref={meshRef} scale={[scale, scale, 1]}>
+        {shaders && (
+          <>
+            <rawShaderMaterial
+              uniforms={shaders.material?.uniforms}
+              vertexShader={shaders.material?.vertexShader}
+              fragmentShader={shaders.material?.fragmentShader}
+              depthTest={false}
+              transparent={true}
+              attach="material"
+            />
+            <instancedBufferGeometry
+              attributes={shaders.geometry?.attributes}
+              index={shaders.geometry?.index}
+              attach="geometry"
+            />
+          </>
+        )}
       </mesh>
       <mesh scale={[scale, scale, 1]} onPointerMove={(e) => handleOnMove(e)}>
         <meshBasicMaterial

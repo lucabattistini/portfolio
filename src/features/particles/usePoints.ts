@@ -1,20 +1,33 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   BufferAttribute,
   InstancedBufferAttribute,
-  InstancedBufferGeometry,
-  RawShaderMaterial,
+  InterleavedBufferAttribute,
+  IUniform,
   Texture,
   Vector2,
 } from 'three';
+import PointerTexture from './pointerTexture';
 
 import vertex from './glsl/shader.vert';
 import fragment from './glsl/shader.frag';
-import PointerTexture from './pointerTexture';
+
+export interface PointsShaders {
+  material?: {
+    uniforms: { [uniform: string]: IUniform };
+    vertexShader: string;
+    fragmentShader: string;
+  };
+  geometry?: {
+    attributes: {
+      [name: string]: BufferAttribute | InterleavedBufferAttribute;
+    };
+    index: BufferAttribute | null;
+  };
+}
 
 const usePoints = (texture: Texture, colorThreshold: number) => {
-  const pointsMaterialRef = useRef<RawShaderMaterial>();
-  const pointsGeometryRef = useRef<InstancedBufferGeometry>();
+  const [shaders, setShaders] = useState<PointsShaders>();
 
   useEffect(() => {
     const pixelsCount = texture.image.width * texture.image.height;
@@ -58,80 +71,67 @@ const usePoints = (texture: Texture, colorThreshold: number) => {
           value: texture,
         },
         uTouch: {
-          value: new Texture(),
+          value: null,
         },
       };
 
-      if (pointsMaterialRef.current) {
-        pointsMaterialRef.current.uniforms = uniforms;
-        pointsMaterialRef.current.vertexShader = vertex;
-        pointsMaterialRef.current.fragmentShader = fragment;
-        pointsMaterialRef.current.depthTest = false;
-        pointsMaterialRef.current.transparent = true;
-      }
+      const positions = new BufferAttribute(new Float32Array(4 * 3), 3);
+      positions.setXYZ(0, -0.5, 0.5, 0.0);
+      positions.setXYZ(1, 0.5, 0.5, 0.0);
+      positions.setXYZ(2, -0.5, -0.5, 0.0);
+      positions.setXYZ(3, 0.5, -0.5, 0.0);
 
-      if (pointsGeometryRef.current !== undefined) {
-        const positions = new BufferAttribute(new Float32Array(4 * 3), 3);
-        positions.setXYZ(0, -0.5, 0.5, 0.0);
-        positions.setXYZ(1, 0.5, 0.5, 0.0);
-        positions.setXYZ(2, -0.5, -0.5, 0.0);
-        positions.setXYZ(3, 0.5, -0.5, 0.0);
+      const uvs = new BufferAttribute(new Float32Array(4 * 2), 2);
+      uvs.setXY(0, 0.0, 0.0);
+      uvs.setXY(1, 1.0, 0.0);
+      uvs.setXY(2, 0.0, 1.0);
+      uvs.setXY(3, 1.0, 1.0);
 
-        pointsGeometryRef.current.setAttribute('position', positions);
+      const indices = new Uint16Array(visiblePixelsCount);
+      const offsets = new Float32Array(visiblePixelsCount * 3);
+      const angles = new Float32Array(visiblePixelsCount);
 
-        const uvs = new BufferAttribute(new Float32Array(4 * 2), 2);
-        uvs.setXY(0, 0.0, 0.0);
-        uvs.setXY(1, 1.0, 0.0);
-        uvs.setXY(2, 0.0, 1.0);
-        uvs.setXY(3, 1.0, 1.0);
-        pointsGeometryRef.current.setAttribute('uv', uvs);
-
-        pointsGeometryRef.current.setIndex(
-          new BufferAttribute(new Uint16Array([0, 2, 1, 2, 3, 1]), 1),
-        );
-
-        const indices = new Uint16Array(visiblePixelsCount);
-        const offsets = new Float32Array(visiblePixelsCount * 3);
-        const angles = new Float32Array(visiblePixelsCount);
-
-        for (let i = 0, j = 0; i < pixelsCount; i++) {
-          if (pixels[i * 4 + 0] <= colorThreshold) {
-            continue;
-          }
-
-          offsets[j * 3 + 0] = i % texture.image.width;
-          offsets[j * 3 + 1] = Math.floor(i / texture.image.width);
-
-          indices[j] = i;
-
-          angles[j] = Math.random() * Math.PI;
-
-          j++;
+      for (let i = 0, j = 0; i < pixelsCount; i++) {
+        if (pixels[i * 4 + 0] <= colorThreshold) {
+          continue;
         }
 
-        pointsGeometryRef.current.setAttribute(
-          'pindex',
-          new InstancedBufferAttribute(indices, 1, false),
-        );
-        pointsGeometryRef.current.setAttribute(
-          'offset',
-          new InstancedBufferAttribute(offsets, 3, false),
-        );
-        pointsGeometryRef.current.setAttribute(
-          'angle',
-          new InstancedBufferAttribute(angles, 1, false),
-        );
+        offsets[j * 3 + 0] = i % texture.image.width;
+        offsets[j * 3 + 1] = Math.floor(i / texture.image.width);
+
+        indices[j] = i;
+
+        angles[j] = Math.random() * Math.PI;
+
+        j++;
       }
+
+      setShaders({
+        material: {
+          uniforms: uniforms,
+          vertexShader: vertex,
+          fragmentShader: fragment,
+        },
+        geometry: {
+          attributes: {
+            position: positions,
+            uv: uvs,
+            pindex: new InstancedBufferAttribute(indices, 1, false),
+            offset: new InstancedBufferAttribute(offsets, 3, false),
+            angle: new InstancedBufferAttribute(angles, 1, false),
+          },
+          index: new BufferAttribute(new Uint16Array([0, 2, 1, 2, 3, 1]), 1),
+        },
+      });
     }
   }, [texture, colorThreshold]);
 
   return useMemo(() => {
     return {
-      pointsMaterialRef,
-      pointsGeometryRef,
+      shaders,
       pointerTexture: new PointerTexture(),
     };
-  }, [pointsMaterialRef, pointsGeometryRef]);
+  }, [shaders]);
 };
 
 export default usePoints;
