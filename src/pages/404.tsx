@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { NextPage } from 'next';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import Link from 'next/link';
 import { useAppDispatch } from '../app/hooks';
 import Charming from '../common/components/charming/Charming';
@@ -16,11 +16,17 @@ const Custom404: NextPage = () => {
       className="font-sans bg-stone-900 flex h-screen overflow-hidden relative cursor-none"
       layout
     >
-      <Head>
-        <title>404 — not found</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      <NextSeo
+        title="404 — not found"
+        additionalLinkTags={[
+          {
+            rel: 'icon',
+            href: '/favicon.ico',
+          },
+        ]}
+        nofollow={false}
+        noindex={true}
+      />
       <Cursor />
       <main className="fixed left-0 top-0 h-screen w-full flex flex-col items-center justify-center px-10 py-12 cursor-auto">
         <motion.span

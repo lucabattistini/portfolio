@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import type { NextPage } from 'next';
-import Head from 'next/head';
+import { NextSeo } from 'next-seo';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Charming from '../common/components/charming/Charming';
 import Cursor from '../features/cursor/Cursor';
@@ -17,10 +17,31 @@ const Home: NextPage = () => {
 
   return (
     <motion.div className="font-sans bg-stone-900 flex h-screen overflow-hidden relative" layout>
-      <Head>
-        <title>luca battistini — frontend developer</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo
+        title="luca battistini — frontend developer"
+        description="i am an italian born and raised frontend developer who tries to make the www a
+      better place"
+        openGraph={{
+          type: 'website',
+          locale: 'en_IE',
+          url: 'https://lucabattistini.dev',
+          site_name: 'luca battistini — frontend developer',
+          images: [
+            {
+              url: 'https://lucabattistini.dev/ogimage.png',
+              alt: 'luca battistini',
+              height: 1920,
+              width: 1080,
+            },
+          ],
+        }}
+        additionalLinkTags={[
+          {
+            rel: 'icon',
+            href: '/favicon.ico',
+          },
+        ]}
+      />
 
       {!loaderState.isCompleted ? (
         <Loader />
