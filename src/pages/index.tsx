@@ -27,7 +27,7 @@ const Home: NextPage = () => {
       ) : (
         <>
           <Cursor />
-          <main className="fixed left-0 top-0 h-screen w-full flex flex-col items-start px-10 py-12 z-10 pointer-events-none">
+          <main className="fixed left-0 top-0 h-full w-full flex flex-col items-start px-10 py-12 z-10 pointer-events-none">
             <div className="flex items-center flex-none">
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
