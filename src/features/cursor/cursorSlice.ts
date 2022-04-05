@@ -29,8 +29,11 @@ export const cursorSlice = createSlice({
     setSpeed: (state: CursorState, action: PayloadAction<number>) => {
       state.speed = action.payload;
     },
-    showCursor: (state) => {
+    show: (state) => {
       state.isVisible = true;
+    },
+    hide: (state) => {
+      state.isVisible = false;
     },
     stick: (state: CursorState, action: PayloadAction<MousePosition>) => {
       state.isStuck = true;
@@ -51,7 +54,7 @@ export const cursorSlice = createSlice({
   },
 });
 
-export const { hover, setPosition, setSpeed, showCursor, stick, unstick, unhover } =
+export const { hide, hover, setPosition, setSpeed, show, stick, unstick, unhover } =
   cursorSlice.actions;
 export const selectCursorState = (state: RootState): CursorState => state.cursor;
 export default cursorSlice.reducer;

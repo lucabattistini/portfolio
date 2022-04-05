@@ -105,7 +105,7 @@ const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
   }, [state.isExploded]);
 
   useFrame((threeState, clockDelta) => {
-    if (pointsMaterialRef.current) {
+    if (pointsMaterialRef.current && Object.keys(pointsMaterialRef.current.uniforms).length > 0) {
       pointsMaterialRef.current.uniforms.uSize.value = uSize.get();
       pointsMaterialRef.current.uniforms.uRandom.value = uRandom.get();
       pointsMaterialRef.current.uniforms.uDepth.value = uDepth.get();

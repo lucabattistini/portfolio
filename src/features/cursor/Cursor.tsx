@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useMobileDetect, useMousePosition } from '../../lib/hooks';
-import { selectCursorState, setPosition, setSpeed, showCursor } from './cursorSlice';
+import { selectCursorState, setPosition, setSpeed, show } from './cursorSlice';
 
 export interface CursorProps {
   easingFunction?: string | number[];
@@ -26,7 +26,7 @@ const Cursor: React.VoidFunctionComponent<CursorProps> = ({ easingFunction = 'ea
         dispach(setSpeed(0.2));
       }, 100);
 
-      dispach(showCursor());
+      dispach(show());
     }
 
     if (state.isStuck === false) {
