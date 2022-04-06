@@ -23,15 +23,14 @@ const Home: NextPage = () => {
       better place"
         openGraph={{
           type: 'website',
-          locale: 'en_IE',
-          url: 'https://lucabattistini.dev',
+          url: 'https://www.lucabattistini.dev',
           site_name: 'luca battistini — frontend developer',
           images: [
             {
-              url: 'https://lucabattistini.dev/ogimage.png',
+              url: 'https://www.lucabattistini.dev/og/1200x675.jpg',
               alt: 'luca battistini',
-              height: 1920,
-              width: 1080,
+              height: 675,
+              width: 1200,
             },
           ],
         }}
@@ -116,7 +115,7 @@ const Home: NextPage = () => {
               </motion.a>
             </div>
           </main>
-          <Particles colorThreshold={34} picture="/me.png" />
+          <Particles colorThreshold={34} picture="/media/me.png" />
         </>
       )}
     </motion.div>
