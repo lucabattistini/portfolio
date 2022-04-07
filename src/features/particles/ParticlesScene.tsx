@@ -8,9 +8,14 @@ import { animate, useMotionValue } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectParticlesState, showParticles } from './particlesSlice';
 
-const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
+export interface ParticleSceneProps extends ParticlesProps {
+  scaleCoefficient: number;
+}
+
+const ParticlesScene: VoidFunctionComponent<ParticleSceneProps> = ({
   colorThreshold = 34,
   picture,
+  scaleCoefficient = 1,
 }) => {
   const state = useAppSelector(selectParticlesState);
 
@@ -18,7 +23,8 @@ const ParticlesScene: VoidFunctionComponent<ParticlesProps> = ({
 
   const scale = useThree((state) => {
     const camera = state.camera as PerspectiveCamera;
-    const fovHeight = 2 * Math.tan((camera.fov * Math.PI) / 180 / 2) * camera.position.z;
+    const fovHeight =
+      2 * Math.tan((camera.fov * Math.PI) / 180 / 2) * camera.position.z * scaleCoefficient;
 
     return fovHeight / texture.image.height;
   });
