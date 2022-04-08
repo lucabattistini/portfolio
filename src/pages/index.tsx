@@ -16,7 +16,10 @@ const Home: NextPage = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <motion.div className="font-sans bg-stone-900 flex h-screen overflow-hidden relative" layout>
+    <motion.div
+      className="fixed bottom-0 w-full font-sans bg-stone-900 flex h-screen overflow-hidden"
+      layout
+    >
       <NextSeo
         title="luca battistini — frontend developer"
         description="i am an italian born and raised frontend developer who tries to make the www a
@@ -47,7 +50,7 @@ const Home: NextPage = () => {
       ) : (
         <>
           <Cursor />
-          <main className="fixed left-0 top-0 h-full w-full flex flex-col items-start px-10 py-12 z-10 pointer-events-none">
+          <main className="absolute left-0 top-0 h-full w-full flex flex-col items-start px-10 py-12 z-10 pointer-events-none">
             <div className="flex items-center flex-none">
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
