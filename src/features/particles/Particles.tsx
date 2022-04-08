@@ -1,7 +1,7 @@
 import { Canvas } from '@react-three/fiber';
 import { Suspense, VoidFunctionComponent } from 'react';
 import { Provider, ReactReduxContext } from 'react-redux';
-import { useMobileDetect } from '../../lib/hooks';
+import { useMedia } from '../../lib/hooks';
 import ParticlesScene from './ParticlesScene';
 
 export interface ParticlesProps {
@@ -10,7 +10,7 @@ export interface ParticlesProps {
 }
 
 const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34, picture }) => {
-  const isMobile = useMobileDetect();
+  const isMobile = useMedia('(max-width: 1024px)');
 
   return (
     <ReactReduxContext.Consumer>
@@ -33,7 +33,7 @@ const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34,
               <ParticlesScene
                 colorThreshold={colorThreshold}
                 picture={picture}
-                scaleCoefficient={isMobile ? 0.7 : 1}
+                scaleCoefficient={isMobile ? 0.65 : 1}
               />
             </Suspense>
           </Provider>

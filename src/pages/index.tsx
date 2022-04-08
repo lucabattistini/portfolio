@@ -64,7 +64,7 @@ const Home: NextPage = () => {
               </motion.div>
             </div>
 
-            <div className="flex-none w-full mt-auto mb-8">
+            <div className="flex flex-1 lg:flex-none items-end w-full mt-auto mb-8">
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
