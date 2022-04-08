@@ -5,10 +5,6 @@ class AppDocument extends Document {
     return (
       <Html lang="en" className="overflow-hidden">
         <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-          />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link
