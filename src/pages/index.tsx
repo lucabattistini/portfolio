@@ -16,10 +16,7 @@ const Home: NextPage = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <motion.div
-      className="fixed bottom-0 w-full font-sans bg-stone-900 flex h-screen overflow-hidden"
-      layout
-    >
+    <motion.div className="fixed w-full h-full min-h-screen font-sans bg-stone-900" layout>
       <NextSeo
         title="luca battistini — frontend developer"
         description="i am an italian born and raised frontend developer who tries to make the www a
