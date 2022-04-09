@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import type { NextPage } from 'next';
 import { NextSeo } from 'next-seo';
@@ -10,13 +11,20 @@ import Loader from '../features/loader/Loader';
 import { selectLoaderState } from '../features/loader/loaderSlice';
 import Particles from '../features/particles/Particles';
 import { explode, unexplode } from '../features/particles/particlesSlice';
+import { useMobileDetect } from '../lib/hooks';
 
 const Home: NextPage = () => {
   const loaderState = useAppSelector(selectLoaderState);
+  const isMobile = useMobileDetect();
   const dispatch = useAppDispatch();
 
   return (
-    <motion.div className="fixed w-full h-full font-sans bg-stone-900" layout>
+    <motion.div
+      className={classNames('fixed', 'w-full', 'h-full', 'font-sans', 'bg-stone-900', {
+        'cursor-none': !loaderState.isCompleted,
+      })}
+      layout
+    >
       <NextSeo
         title="luca battistini — frontend developer"
         description="i am an italian born and raised frontend developer who tries to make the www a
@@ -46,7 +54,7 @@ const Home: NextPage = () => {
         <Loader />
       ) : (
         <>
-          <Cursor />
+          {!isMobile && <Cursor />}
           <main className="absolute left-0 top-0 h-full w-full flex flex-col items-start px-10 py-12 z-10 pointer-events-none">
             <div className="flex items-center flex-none">
               <motion.div

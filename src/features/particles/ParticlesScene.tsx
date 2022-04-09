@@ -18,25 +18,11 @@ const ParticlesScene: VoidFunctionComponent<ParticleSceneProps> = ({
   scaleCoefficient = 1,
 }) => {
   const state = useAppSelector(selectParticlesState);
-
   const texture = useTexture(picture);
-
-  const scale = useThree((state) => {
-    const camera = state.camera as PerspectiveCamera;
-    const fovHeight =
-      2 * Math.tan((camera.fov * Math.PI) / 180 / 2) * camera.position.z * scaleCoefficient;
-
-    return fovHeight / texture.image.height;
-  });
-
-  const { shaders, pointerTexture } = usePoints(texture, colorThreshold);
-
   const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial>>();
-
+  const { shaders, pointerTexture } = usePoints(texture, colorThreshold);
   const uSize = useMotionValue(0.5);
-
   const uRandom = useMotionValue(1.0);
-
   const uDepth = useMotionValue(40.0);
 
   const dispatch = useAppDispatch();
@@ -51,6 +37,14 @@ const ParticlesScene: VoidFunctionComponent<ParticleSceneProps> = ({
     },
     [shaders],
   );
+
+  const scale = useThree((state) => {
+    const camera = state.camera as PerspectiveCamera;
+    const fovHeight =
+      2 * Math.tan((camera.fov * Math.PI) / 180 / 2) * camera.position.z * scaleCoefficient;
+
+    return fovHeight / texture.image.height;
+  });
 
   useEffect(() => {
     if (meshRef.current && shaders && pointerTexture) {

@@ -27,7 +27,7 @@ const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34,
             antialias: true,
             alpha: true,
           }}
-          className="-top-6 lg:top-0"
+          className="cursor-auto -top-6 lg:top-0"
         >
           <Provider store={store}>
             <Suspense fallback={null}>
