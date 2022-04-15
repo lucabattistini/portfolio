@@ -27,7 +27,7 @@ const Home: NextPage = () => {
     >
       <NextSeo
         title="luca battistini — frontend developer"
-        description="i am an italian born and raised frontend developer who tries to make the www a
+        description="i am a born and raised italian frontend developer who tries to make the www a
       better place"
         openGraph={{
           type: 'website',
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
               >
                 <Charming delay={50}>
                   <p className="font-sans text-base font-normal text-red-700 select-none">
-                    i am an italian born and raised frontend developer who tries to make the www a
+                    i am a born and raised italian frontend developer who tries to make the www a
                     better place
                   </p>
                 </Charming>
