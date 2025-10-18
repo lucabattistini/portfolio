@@ -82,7 +82,7 @@ const Home: NextPage = () => {
               >
                 <Charming delay={50}>
                   <p className="font-sans text-base font-normal text-red-700 select-none">
-                    i am a born and raised italian frontend developer who tries to make the www a
+                    i am a born and raised italian software engineer who tries to make the www a
                     better place
                   </p>
                 </Charming>
