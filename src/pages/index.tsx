@@ -26,13 +26,13 @@ const Home: NextPage = () => {
       layout
     >
       <NextSeo
-        title="luca battistini — frontend developer"
-        description="i am a born and raised italian frontend developer who tries to make the www a
+        title="luca battistini — software engineer"
+        description="i am a born and raised italian software engineer who tries to make the www a
       better place"
         openGraph={{
           type: 'website',
           url: 'https://www.lucabattistini.dev',
-          site_name: 'luca battistini — frontend developer',
+          site_name: 'luca battistini — software engineer',
           images: [
             {
               url: 'https://www.lucabattistini.dev/og/1200x675.jpg',
