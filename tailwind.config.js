@@ -9,6 +9,25 @@ module.exports = {
       sans: ['Roboto Mono', 'sans-serif'],
     },
     extend: {
+      colors: {
+        theme: {
+          background: 'var(--color-background)',
+          'background-secondary': 'var(--color-background-secondary)',
+          'text-primary': 'var(--color-text-primary)',
+          'text-secondary': 'var(--color-text-secondary)',
+          'text-muted': 'var(--color-text-muted)',
+          accent: 'var(--color-accent)',
+          'accent-hover': 'var(--color-accent-hover)',
+          border: 'var(--color-border)',
+          cursor: 'var(--color-cursor-bg)',
+          'cursor-blend': 'var(--color-cursor-blend)',
+          button: 'var(--color-button-bg)',
+          'button-text': 'var(--color-button-text)',
+          'button-hover': 'var(--color-button-hover)',
+          particles: 'var(--color-particles-bg)',
+          loader: 'var(--color-loader-text)',
+        },
+      },
       keyframes: {
         hello: {
           '0%, 10%': { transform: 'rotate(0deg)' },

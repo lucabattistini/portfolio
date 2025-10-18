@@ -8,6 +8,7 @@ import {
   Vector2,
 } from 'three';
 import PointerTexture from './pointerTexture';
+import { Theme } from '../theme/themeSlice';
 
 import vertex from './glsl/shader.vert';
 import fragment from './glsl/shader.frag';
@@ -26,7 +27,7 @@ export interface PointsShaders {
   };
 }
 
-const usePoints = (texture: Texture, colorThreshold: number) => {
+const usePoints = (texture: Texture, colorThreshold: number, theme: Theme) => {
   const [shaders, setShaders] = useState<PointsShaders>();
 
   useEffect(() => {
@@ -72,6 +73,9 @@ const usePoints = (texture: Texture, colorThreshold: number) => {
         },
         uTouch: {
           value: null,
+        },
+        uInvert: {
+          value: theme === 'light' ? 1.0 : 0.0,
         },
       };
 
@@ -124,7 +128,7 @@ const usePoints = (texture: Texture, colorThreshold: number) => {
         },
       });
     }
-  }, [texture, colorThreshold]);
+  }, [texture, colorThreshold, theme]);
 
   return useMemo(() => {
     return {

@@ -7,20 +7,23 @@ import { ParticlesProps } from './Particles';
 import { animate, useMotionValue } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectParticlesState, showParticles } from './particlesSlice';
+import { Theme } from '../theme/themeSlice';
 
 export interface ParticleSceneProps extends ParticlesProps {
   scaleCoefficient: number;
+  theme: Theme;
 }
 
 const ParticlesScene: VoidFunctionComponent<ParticleSceneProps> = ({
   colorThreshold = 34,
   picture,
   scaleCoefficient = 1,
+  theme,
 }) => {
   const state = useAppSelector(selectParticlesState);
   const texture = useTexture(picture);
   const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial>>();
-  const { shaders, pointerTexture } = usePoints(texture, colorThreshold);
+  const { shaders, pointerTexture } = usePoints(texture, colorThreshold, theme);
   const uSize = useMotionValue(0.5);
   const uRandom = useMotionValue(1.0);
   const uDepth = useMotionValue(40.0);
@@ -103,12 +106,20 @@ const ParticlesScene: VoidFunctionComponent<ParticleSceneProps> = ({
     };
   }, [state.isExploded]);
 
+  // Update invert uniform when theme changes
+  useEffect(() => {
+    if (meshRef.current && shaders) {
+      meshRef.current.material.uniforms.uInvert.value = theme === 'light' ? 1.0 : 0.0;
+    }
+  }, [theme, shaders]);
+
   useFrame((threeState, clockDelta) => {
     if (shaders && meshRef.current && Object.keys(meshRef.current.material.uniforms).length > 0) {
       meshRef.current.material.uniforms.uSize.value = uSize.get();
       meshRef.current.material.uniforms.uRandom.value = uRandom.get();
       meshRef.current.material.uniforms.uDepth.value = uDepth.get();
       meshRef.current.material.uniforms.uTime.value += clockDelta;
+      meshRef.current.material.uniforms.uInvert.value = theme === 'light' ? 1.0 : 0.0;
 
       pointerTexture.update();
     }

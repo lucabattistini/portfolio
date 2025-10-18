@@ -1,3 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --color-background: #f5f5f4; /* stone-100 */
+  --color-background-secondary: #ffffff; /* white */
+  --color-text-primary: #dc2626; /* red-600 */
+  --color-text-secondary: #57534e; /* stone-600 */
+  --color-text-muted: #a8a29e; /* stone-400 */
+  --color-accent: #dc2626; /* red-600 */
+  --color-accent-hover: #b91c1c; /* red-700 */
+  --color-border: #e7e5e4; /* stone-200 */
+  --color-shadow: rgba(0, 0, 0, 0.1);
+
+  --color-cursor-bg: #dc2626; /* red-600 */
+  --color-cursor-blend: #1c1917; /* stone-900 for blend mode */
+  --color-button-bg: #dc2626; /* red-600 */
+  --color-button-text: #ffffff; /* white */
+  --color-button-hover: #b91c1c; /* red-700 */
+
+  --color-particles-bg: rgba(220, 38, 38, 0.1); /* red-600 with opacity */
+  --color-loader-text: #dc2626; /* red-600 */
+}
+
+[data-theme='dark'] {
+  --color-background: #1c1917; /* stone-900 */
+  --color-background-secondary: #292524; /* stone-800 */
+  --color-text-primary: #b91c1c; /* red-700 */
+  --color-text-secondary: #57534e; /* stone-600 */
+  --color-text-muted: #78716c; /* stone-500 */
+  --color-accent: #b91c1c; /* red-700 */
+  --color-accent-hover: #dc2626; /* red-600 */
+  --color-border: #44403c; /* stone-700 */
+  --color-shadow: rgba(0, 0, 0, 0.3);
+
+  --color-cursor-bg: #b91c1c; /* red-700 */
+  --color-cursor-blend: #1c1917; /* stone-900 */
+  --color-button-bg: #b91c1c; /* red-700 */
+  --color-button-text: #1c1917; /* stone-900 */
+  --color-button-hover: #dc2626; /* red-600 */
+
+  --color-particles-bg: rgba(185, 28, 28, 0.1); /* red-700 with opacity */
+  --color-loader-text: #b91c1c; /* red-700 */
+}
+
+.bg-theme-primary {
+  background-color: var(--color-background);
+}
+
+.bg-theme-secondary {
+  background-color: var(--color-background-secondary);
+}
+
+.text-theme-primary {
+  color: var(--color-text-primary);
+}
+
+.text-theme-secondary {
+  color: var(--color-text-secondary);
+}
+
+.text-theme-muted {
+  color: var(--color-text-muted);
+}
+
+.border-theme {
+  border-color: var(--color-border);
+}
+
+.shadow-theme {
+  box-shadow: 0 4px 6px -1px var(--color-shadow), 0 2px 4px -1px var(--color-shadow);
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

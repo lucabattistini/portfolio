@@ -4,6 +4,7 @@ import { createWrapper } from 'next-redux-wrapper';
 import cursorReducer from '../features/cursor/cursorSlice';
 import loaderReducer from '../features/loader/loaderSlice';
 import particlesReducer from '../features/particles/particlesSlice';
+import themeReducer from '../features/theme/themeSlice';
 
 export const makeStore = () =>
   configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () =>
       cursor: cursorReducer,
       loader: loaderReducer,
       particles: particlesReducer,
+      theme: themeReducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
   });

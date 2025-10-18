@@ -2,6 +2,8 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense, VoidFunctionComponent } from 'react';
 import { Provider, ReactReduxContext } from 'react-redux';
 import { useMedia } from '../../lib/hooks';
+import { useAppSelector } from '../../app/hooks';
+import { selectTheme } from '../theme/themeSlice';
 import ParticlesScene from './ParticlesScene';
 
 export interface ParticlesProps {
@@ -11,6 +13,7 @@ export interface ParticlesProps {
 
 const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34, picture }) => {
   const isMobile = useMedia('(max-width: 1024px)');
+  const theme = useAppSelector(selectTheme);
 
   return (
     <ReactReduxContext.Consumer>
@@ -32,9 +35,11 @@ const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34,
           <Provider store={store}>
             <Suspense fallback={null}>
               <ParticlesScene
+                key={`particles-${theme}`} // Force remount when theme changes
                 colorThreshold={colorThreshold}
                 picture={picture}
                 scaleCoefficient={isMobile ? 0.65 : 1}
+                theme={theme}
               />
             </Suspense>
           </Provider>
