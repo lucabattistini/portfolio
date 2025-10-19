@@ -7,19 +7,18 @@ import { ParticlesProps } from './Particles';
 import { animate, useMotionValue } from 'framer-motion';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectParticlesState, showParticles } from './particlesSlice';
-import { Theme } from '../theme/themeSlice';
+import { selectTheme } from '../theme/themeSlice';
 
 export interface ParticleSceneProps extends ParticlesProps {
   scaleCoefficient: number;
-  theme: Theme;
 }
 
 const ParticlesScene: VoidFunctionComponent<ParticleSceneProps> = ({
   colorThreshold = 34,
   picture,
   scaleCoefficient = 1,
-  theme,
 }) => {
+  const theme = useAppSelector(selectTheme);
   const state = useAppSelector(selectParticlesState);
   const texture = useTexture(picture);
   const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial>>();

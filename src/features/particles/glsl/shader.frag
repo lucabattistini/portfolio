@@ -19,9 +19,10 @@ void main() {
 	// greyscale
 	float grey = colA.r * 0.21 + colA.g * 0.71 + colA.b * 0.07;
 	
-	// For light theme (uInvert = 1.0), darken the particles to make them visible on light background
-	// For dark theme (uInvert = 0.0), use original greyscale
-	grey = mix(grey, grey * 0.7, uInvert);
+	// light theme
+	if (uInvert > 0.5) {
+		grey = grey * 0.3;
+	}
 	
 	vec4 colB = vec4(grey, grey, grey, 1.0);
 

@@ -35,11 +35,10 @@ const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34,
           <Provider store={store}>
             <Suspense fallback={null}>
               <ParticlesScene
-                key={`particles-${theme}`} // Force remount when theme changes
+                key={`particles-${theme}`}
                 colorThreshold={colorThreshold}
                 picture={picture}
                 scaleCoefficient={isMobile ? 0.65 : 1}
-                theme={theme}
               />
             </Suspense>
           </Provider>
