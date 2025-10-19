@@ -1,6 +1,3 @@
-// Example of how to update your index.tsx to use theme variables
-// This is a demonstration - you can choose which approach to use
-
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
 import type { NextPage } from 'next';
