@@ -8,6 +8,7 @@ import { NextSeo } from 'next-seo';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import Charming from '../common/components/charming/Charming';
 import ThemeToggle from '../features/theme/ThemeToggle';
+import { selectTheme } from '../features/theme/themeSlice';
 import Cursor from '../features/cursor/Cursor';
 import { hover, stick, unhover, unstick } from '../features/cursor/cursorSlice';
 import { computeStuckCoordinates } from '../features/cursor/cursorUtils';
@@ -19,6 +20,7 @@ import { useMobileDetect } from '../lib/hooks';
 
 const Home: NextPage = () => {
   const loaderState = useAppSelector(selectLoaderState);
+  const theme = useAppSelector(selectTheme);
   const isMobile = useMobileDetect();
   const dispatch = useAppDispatch();
 
@@ -132,7 +134,7 @@ const Home: NextPage = () => {
               </motion.a>
             </div>
           </main>
-          <Particles colorThreshold={34} picture="/media/me.png" />
+          <Particles colorThreshold={34} picture={`/media/me-${theme}.png`} />
         </>
       )}
     </motion.div>
