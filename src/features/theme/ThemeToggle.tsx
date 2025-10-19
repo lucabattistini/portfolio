@@ -40,7 +40,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className }) => {
         light
       </button>
 
-      <hr className="bg-theme-text-secondary w-px h-5 mr-3 rotate-[22.5deg] border-0" />
+      <hr className="bg-theme-text-secondary w-px h-5 mr-3 rotate-[22.5deg] border-0 self-center" />
 
       <button
         onClick={() => theme !== 'dark' && dispatch(toggleTheme())}

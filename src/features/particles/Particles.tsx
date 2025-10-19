@@ -38,7 +38,7 @@ const Particles: VoidFunctionComponent<ParticlesProps> = ({ colorThreshold = 34,
                 key={`particles-${theme}`}
                 colorThreshold={colorThreshold}
                 picture={picture}
-                scaleCoefficient={isMobile ? 0.65 : 1}
+                scaleCoefficient={isMobile ? 0.55 : 1}
               />
             </Suspense>
           </Provider>
