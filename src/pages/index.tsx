@@ -78,7 +78,7 @@ const Home: NextPage = () => {
               <ThemeToggle />
             </div>
 
-            <div className="flex flex-1 lg:flex-none items-end w-full mt-auto mb-8">
+            <div className="flex flex-col justify-end md:flex-row md:items-end flex-1 lg:flex-none items-start w-full mt-auto mb-8">
               <motion.div
                 initial={{ opacity: 0, left: '-12px' }}
                 animate={{ opacity: 1, left: 0, transition: { duration: 0.5 } }}
@@ -88,8 +88,22 @@ const Home: NextPage = () => {
               >
                 <Charming delay={50}>
                   <p className="font-sans text-base font-normal text-theme-text-primary select-none">
-                    i am a born and raised italian software engineer who tries to make the www a
-                    better place
+                    i am a born and raised italian freelance software engineer who tries to make the
+                    www a better place
+                  </p>
+                </Charming>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, right: '-12px' }}
+                animate={{ opacity: 1, right: 0, transition: { duration: 0.5 } }}
+                className="self-end md:self-start md:ml-auto relative pointer-events-auto"
+                onMouseEnter={() => dispatch(hover())}
+                onMouseLeave={() => dispatch(unhover())}
+              >
+                <Charming delay={50}>
+                  <p className="font-sans text-base font-normal text-theme-text-primary select-none">
+                    p.iva 04841180401
                   </p>
                 </Charming>
               </motion.div>

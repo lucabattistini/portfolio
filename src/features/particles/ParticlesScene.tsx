@@ -9,6 +9,8 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { selectParticlesState, showParticles } from './particlesSlice';
 import { selectTheme } from '../theme/themeSlice';
 
+/* eslint-disable react/no-unknown-property */
+
 export interface ParticleSceneProps extends ParticlesProps {
   scaleCoefficient: number;
 }
