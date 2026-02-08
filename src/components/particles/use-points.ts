@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useMemo } from 'react';
+import { useMemo } from "react";
 import {
   BufferAttribute,
   InstancedBufferAttribute,
@@ -8,10 +8,10 @@ import {
   type IUniform,
   type Texture,
   Vector2,
-} from 'three';
-import { createPointerTexture, type PointerTextureApi } from './pointer-texture';
-import { particlesFragmentShader, particlesVertexShader } from './generated-shaders';
-import { getTextureImage } from './texture-image';
+} from "three";
+import { createTouchTexture, type TouchTexture } from "./touch-texture";
+import { fragmentShader, vertexShader } from "@lib/shaders";
+import { getTextureImage } from "./texture-image";
 
 type PointsShaders = {
   material?: {
@@ -23,11 +23,11 @@ type PointsShaders = {
     attributes: Record<string, BufferAttribute | InterleavedBufferAttribute>;
     index: BufferAttribute | null;
   };
-}
+};
 
 type UsePointsResult = {
   shaders?: PointsShaders;
-  pointerTexture: PointerTextureApi;
+  TouchTexture: TouchTexture;
 };
 
 const pseudoRandom01 = (n: number) => {
@@ -36,18 +36,18 @@ const pseudoRandom01 = (n: number) => {
 };
 
 function usePoints(texture: Texture, colorThreshold: number) {
-  const pointerTexture = useMemo(() => createPointerTexture(), []);
+  const TouchTexture = useMemo(() => createTouchTexture(), []);
 
   const shaders = useMemo<PointsShaders | undefined>(() => {
-    if (typeof document === 'undefined') return undefined;
+    if (typeof document === "undefined") return undefined;
 
     const image = getTextureImage(texture);
     if (!image) return undefined;
 
     const pixelsCount = image.width * image.height;
 
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
 
     if (!context) return undefined;
 
@@ -107,9 +107,6 @@ function usePoints(texture: Texture, colorThreshold: number) {
       j++;
     }
 
-    const vertexShader = particlesVertexShader();
-    const fragmentShader = particlesFragmentShader();
-
     return {
       material: {
         uniforms,
@@ -130,8 +127,8 @@ function usePoints(texture: Texture, colorThreshold: number) {
   }, [texture, colorThreshold]);
 
   return useMemo<UsePointsResult>(() => {
-    return { shaders, pointerTexture };
-  }, [shaders, pointerTexture]);
-};
+    return { shaders, TouchTexture };
+  }, [shaders, TouchTexture]);
+}
 
 export { usePoints };

@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { ParticlesScene } from "./particles-scene";
+import { ParticlesScene } from "./scene";
 
 type ParticlesProps = {
   colorThreshold?: number;
@@ -15,7 +15,7 @@ export function Particles({ colorThreshold = 34, picture }: ParticlesProps) {
     window.matchMedia("(max-width: 1024px)").matches;
 
   return (
-    <div className="h-screen w-full">
+    <div className="fixed h-screen w-full">
       <Canvas
         camera={{
           fov: 50,

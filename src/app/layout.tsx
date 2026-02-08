@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { ParticlesProvider } from "@/components/particles/particles-store";
+import { ParticlesProvider } from "@/components/particles";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",

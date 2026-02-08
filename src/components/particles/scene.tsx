@@ -10,10 +10,11 @@ import {
   type PerspectiveCamera,
   type RawShaderMaterial,
 } from 'three';
-import { animate, useMotionValue } from 'framer-motion';
+import { animate } from 'motion';
 import { usePoints } from './use-points';
-import { useParticlesActorRef, useParticlesSelector } from './particles-store';
+import { useParticlesActorRef, useParticlesSelector } from './store';
 import { getTextureImage } from './texture-image';
+import { useMotionValue } from 'motion/react';
 
 export type ParticlesSceneProps = {
   colorThreshold?: number;
@@ -31,7 +32,7 @@ export function ParticlesScene({
   const texture = useTexture(picture);
   const image = getTextureImage(texture);
   const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial> | null>(null);
-  const { shaders, pointerTexture } = usePoints(texture, colorThreshold);
+  const { shaders, TouchTexture } = usePoints(texture, colorThreshold);
   const uSize = useMotionValue(0.5);
   const uRandom = useMotionValue(1.0);
   const uDepth = useMotionValue(40.0);
@@ -39,10 +40,10 @@ export function ParticlesScene({
   const handleOnMove = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
       if (shaders && e.intersections.length > 0 && e.intersections[0]?.uv) {
-        pointerTexture.addPoint(e.intersections[0].uv);
+        TouchTexture.addPoint(e.intersections[0].uv);
       }
     },
-    [shaders, pointerTexture],
+    [shaders, TouchTexture],
   );
 
   const scale = useThree((state) => {
@@ -56,10 +57,10 @@ export function ParticlesScene({
   useEffect(() => {
     if (meshRef.current && shaders) {
       // Connect pointer texture once shaders/material exist
-      meshRef.current.material.uniforms.uTouch.value = pointerTexture.texture;
+      meshRef.current.material.uniforms.uTouch.value = TouchTexture.texture;
       actorRef.send({ type: 'SHOW' });
     }
-  }, [pointerTexture, shaders, actorRef]);
+  }, [TouchTexture, shaders, actorRef]);
 
   useEffect(() => {
     const baseDuration = 0.9;
@@ -119,7 +120,7 @@ export function ParticlesScene({
       uniforms.uDepth.value = uDepth.get();
       uniforms.uTime.value += clockDelta;
 
-      pointerTexture.update();
+      TouchTexture.update();
     }
   });
 

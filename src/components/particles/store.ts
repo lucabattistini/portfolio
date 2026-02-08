@@ -3,7 +3,7 @@
 import { createElement, type ComponentProps } from 'react';
 import { createActorContext } from '@xstate/react';
 import type { SnapshotFrom } from 'xstate';
-import { createParticlesMachine } from './particles-machine';
+import { createParticlesMachine } from './machine';
 
 type ParticlesMachine = ReturnType<typeof createParticlesMachine>;
 type ParticlesSnapshot = SnapshotFrom<ParticlesMachine>;
