@@ -35,7 +35,7 @@ export function Contacts() {
                 <div>
                   <h3>
                     <Link
-                      className="text-lg text-primary hover:text-accent transition font-sans font-bold"
+                      className="text-lg text-primary hover:text-accent transition font-sans font-bold pointer-events-auto"
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -58,7 +58,7 @@ export function Contacts() {
                 <div key={name}>
                   <h3>
                     <Link
-                      className="text-lg text-primary hover:text-accent transition font-sans font-bold"
+                      className="text-lg text-primary hover:text-accent transition font-sans font-bold pointer-events-auto"
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"

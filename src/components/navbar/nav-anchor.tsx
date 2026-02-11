@@ -18,7 +18,7 @@ export function NavAnchor() {
         <button
           onClick={onClick}
           aria-live="polite"
-          className={cn("text-xl text-primary transition font-sans font-bold", {
+          className={cn("text-xl text-primary transition font-sans font-bold select-none", {
             "cursor-pointer hover:text-accent": isBeyondFold,
           })}
           type="button"

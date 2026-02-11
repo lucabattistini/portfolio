@@ -5,7 +5,7 @@ import { Timezone } from "./timezone";
 export function Navbar() {
   return (
     <nav className="fixed max-w-384 flex items-start justify-between gap-0 w-full h-min p-0 overflow-visible z-20 top-8 px-16">
-      <div className="relative flex items-center gap-4 w-full h-auto">
+      <div className="relative flex items-center gap-4 w-full h-auto select-none">
         <div>
           <p className="text-xl text-primary font-sans font-bold">
             Luca Battistini
@@ -49,7 +49,7 @@ export function Navbar() {
         <ul className="relative flex flex-col">
           <li>
             <Link
-              className="text-xl text-primary hover:text-accent transition font-sans font-bold"
+              className="text-xl text-primary hover:text-accent transition font-sans font-bold select-none"
               href="/luca-battistini-resume.pdf"
               download
               target="_blank"
@@ -60,7 +60,7 @@ export function Navbar() {
           </li>
           <li>
             <Link
-              className="text-xl text-primary hover:text-accent transition font-sans font-bold"
+              className="text-xl text-primary hover:text-accent transition font-sans font-bold select-none"
               href="mailto:hello@lucabattistini.dev"
               target="_blank"
               rel="noopener noreferrer"
@@ -69,7 +69,7 @@ export function Navbar() {
             </Link>
           </li>
         </ul>
-        <div className="relative flex flex-col flex-none items-center justify-start">
+        <div className="relative flex flex-col flex-none items-center justify-start select-none">
           <Timezone />
         </div>
       </div>

@@ -15,7 +15,7 @@ export function Home() {
     <main className="relative flex w-full h-min min-h-screen flex-col items-center justify-start content-center gap-0 overflow-visible p-0 bg-background">
       <Navbar />
       <Particles picture="/me.png" />
-      <article className="relative w-full max-w-384">
+      <article className="relative w-full max-w-384 pointer-events-none">
         <Hero />
         <div className="py-56 px-16">
           <About />
