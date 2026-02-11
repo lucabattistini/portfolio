@@ -3,7 +3,6 @@
 precision highp float;
 
 uniform sampler2D uTexture;
-uniform float uInvert;
 
 varying vec2 vPUv;
 varying vec2 vUv;
@@ -18,11 +17,6 @@ void main() {
 
 	// greyscale
 	float grey = colA.r * 0.21 + colA.g * 0.71 + colA.b * 0.07;
-
-	// light theme
-	if (uInvert > 0.5) {
-		grey = grey * 0.3;
-	}
 
 	vec4 colB = vec4(grey, grey, grey, 1.0);
 

@@ -3,19 +3,21 @@
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { ParticlesScene } from "./scene";
+import { cn } from "@/lib/styles";
 
 type ParticlesProps = {
   colorThreshold?: number;
   picture: string;
+  className?: string;
 };
 
-export function Particles({ colorThreshold = 34, picture }: ParticlesProps) {
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 1024px)").matches;
-
+export function Particles({
+  colorThreshold = 34,
+  picture,
+  className,
+}: ParticlesProps) {
   return (
-    <div className="fixed h-screen w-full">
+    <figure className={cn("fixed h-full w-full left-0 top-0", className)}>
       <Canvas
         camera={{
           fov: 50,
@@ -30,10 +32,10 @@ export function Particles({ colorThreshold = 34, picture }: ParticlesProps) {
           <ParticlesScene
             colorThreshold={colorThreshold}
             picture={picture}
-            scaleCoefficient={isMobile ? 0.55 : 1}
+            scaleCoefficient={1}
           />
         </Suspense>
       </Canvas>
-    </div>
+    </figure>
   );
 }

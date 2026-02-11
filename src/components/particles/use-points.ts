@@ -10,25 +10,28 @@ import {
   Vector2,
 } from "three";
 import { createTouchTexture, type TouchTexture } from "./touch-texture";
-import { fragmentShader, vertexShader } from "@lib/shaders";
+import { fragmentShader, vertexShader } from "@/lib/shaders";
 import { getTextureImage } from "./texture-image";
 
 type PointsShaders = {
-  material?: {
+  material: {
     uniforms: Record<string, IUniform>;
     vertexShader: string;
     fragmentShader: string;
   };
-  geometry?: {
+  geometry: {
     attributes: Record<string, BufferAttribute | InterleavedBufferAttribute>;
     index: BufferAttribute | null;
   };
 };
 
 type UsePointsResult = {
-  shaders?: PointsShaders;
-  TouchTexture: TouchTexture;
-};
+  touchTexture: TouchTexture;
+} & (
+  | { status: "loading" }
+  | { status: "ready"; shaders: PointsShaders }
+  | { status: "error"; error: unknown }
+);
 
 const pseudoRandom01 = (n: number) => {
   const x = Math.sin(n * 12.9898) * 43758.5453123;
@@ -36,30 +39,42 @@ const pseudoRandom01 = (n: number) => {
 };
 
 function usePoints(texture: Texture, colorThreshold: number) {
-  const TouchTexture = useMemo(() => createTouchTexture(), []);
+  const touchTexture = useMemo(() => createTouchTexture(), []);
 
-  const shaders = useMemo<PointsShaders | undefined>(() => {
-    if (typeof document === "undefined") return undefined;
+  const result = useMemo<UsePointsResult>(() => {
+    if (typeof document === "undefined") {
+      return { status: "loading", touchTexture };
+    }
 
     const image = getTextureImage(texture);
-    if (!image) return undefined;
+    if (!image) {
+      return { status: "loading", touchTexture };
+    }
 
     const pixelsCount = image.width * image.height;
 
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
-    if (!context) return undefined;
+    if (!context) {
+      return { status: "loading", touchTexture };
+    }
 
     let visiblePixelsCount = 0;
 
     canvas.width = image.width;
     canvas.height = image.height;
-    context.scale(1, -1);
-    context.drawImage(image, 0, 0, image.width, image.height * -1);
+    let pixels: Float32Array;
 
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const pixels = Float32Array.from(imageData.data);
+    try {
+      context.scale(1, -1);
+      context.drawImage(image, 0, 0, image.width, image.height * -1);
+
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      pixels = Float32Array.from(imageData.data);
+    } catch (error) {
+      return { status: "error", touchTexture, error };
+    }
 
     for (let i = 0; i < pixelsCount; i++) {
       if (pixels[i * 4 + 0] > colorThreshold) {
@@ -75,7 +90,6 @@ function usePoints(texture: Texture, colorThreshold: number) {
       uTextureSize: { value: new Vector2(image.width, image.height) },
       uTexture: { value: texture },
       uTouch: { value: null },
-      uInvert: { value: 0.0 },
     };
 
     const positions = new BufferAttribute(new Float32Array(4 * 3), 3);
@@ -107,7 +121,7 @@ function usePoints(texture: Texture, colorThreshold: number) {
       j++;
     }
 
-    return {
+    const shaders: PointsShaders = {
       material: {
         uniforms,
         vertexShader,
@@ -124,11 +138,11 @@ function usePoints(texture: Texture, colorThreshold: number) {
         index: new BufferAttribute(new Uint16Array([0, 2, 1, 2, 3, 1]), 1),
       },
     };
-  }, [texture, colorThreshold]);
 
-  return useMemo<UsePointsResult>(() => {
-    return { shaders, TouchTexture };
-  }, [shaders, TouchTexture]);
+    return { status: "ready", touchTexture, shaders };
+  }, [texture, touchTexture, colorThreshold]);
+
+  return result;
 }
 
 export { usePoints };

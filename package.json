@@ -12,10 +12,12 @@
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@xstate/react": "^6.0.0",
+    "clsx": "^2.1.1",
     "motion": "^12.31.2",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "tailwind-merge": "^3.4.0",
     "three": "^0.182.0",
     "xstate": "^5.26.0"
   },

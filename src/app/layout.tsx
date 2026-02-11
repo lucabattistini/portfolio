@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import { Roboto_Mono, Space_Grotesk } from "next/font/google";
-import "./globals.css";
+import { Space_Grotesk,  Bebas_Neue } from "next/font/google";
 import { ParticlesProvider } from "@/components/particles";
+import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
 });
 
-const robotoMono = Roboto_Mono({
-  variable: "--font-roboto-mono",
+const bebasNeue = Bebas_Neue({
+  variable: "--font-bebas-neue",
   subsets: ["latin"],
+  weight: "400"
 });
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${spaceGrotesk.variable} ${robotoMono.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${bebasNeue.variable} antialiased`}
       >
         <ParticlesProvider>
           {children}

@@ -11,10 +11,10 @@ import {
   type RawShaderMaterial,
 } from 'three';
 import { animate } from 'motion';
+import { useMotionValue } from 'motion/react';
 import { usePoints } from './use-points';
 import { useParticlesActorRef, useParticlesSelector } from './store';
 import { getTextureImage } from './texture-image';
-import { useMotionValue } from 'motion/react';
 
 export type ParticlesSceneProps = {
   colorThreshold?: number;
@@ -32,18 +32,18 @@ export function ParticlesScene({
   const texture = useTexture(picture);
   const image = getTextureImage(texture);
   const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial> | null>(null);
-  const { shaders, TouchTexture } = usePoints(texture, colorThreshold);
+  const points = usePoints(texture, colorThreshold);
   const uSize = useMotionValue(0.5);
   const uRandom = useMotionValue(1.0);
   const uDepth = useMotionValue(40.0);
 
   const handleOnMove = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
-      if (shaders && e.intersections.length > 0 && e.intersections[0]?.uv) {
-        TouchTexture.addPoint(e.intersections[0].uv);
+      if (points.status === 'ready' && e.intersections.length > 0 && e.intersections[0]?.uv) {
+        points.touchTexture.addPoint(e.intersections[0].uv);
       }
     },
-    [shaders, TouchTexture],
+    [points],
   );
 
   const scale = useThree((state) => {
@@ -55,12 +55,11 @@ export function ParticlesScene({
   });
 
   useEffect(() => {
-    if (meshRef.current && shaders) {
-      // Connect pointer texture once shaders/material exist
-      meshRef.current.material.uniforms.uTouch.value = TouchTexture.texture;
+    if (meshRef.current && points.status === 'ready') {
+      meshRef.current.material.uniforms.uTouch.value = points.touchTexture.texture;
       actorRef.send({ type: 'SHOW' });
     }
-  }, [TouchTexture, shaders, actorRef]);
+  }, [points, actorRef]);
 
   useEffect(() => {
     const baseDuration = 0.9;
@@ -112,7 +111,7 @@ export function ParticlesScene({
   }, [isExploded, uDepth, uRandom]);
 
   useFrame((_, clockDelta) => {
-    if (shaders && meshRef.current && meshRef.current.material.uniforms) {
+    if (points.status === 'ready' && meshRef.current && meshRef.current.material.uniforms) {
       const uniforms = meshRef.current.material.uniforms;
 
       uniforms.uSize.value = uSize.get();
@@ -120,26 +119,26 @@ export function ParticlesScene({
       uniforms.uDepth.value = uDepth.get();
       uniforms.uTime.value += clockDelta;
 
-      TouchTexture.update();
+      points.touchTexture.update();
     }
   });
 
   return (
     <>
       <mesh ref={meshRef} scale={[scale, scale, 1]}>
-        {shaders ? (
+        {points.status === 'ready' ? (
           <>
             <rawShaderMaterial
-              uniforms={shaders.material?.uniforms}
-              vertexShader={shaders.material?.vertexShader}
-              fragmentShader={shaders.material?.fragmentShader}
+              uniforms={points.shaders.material.uniforms}
+              vertexShader={points.shaders.material.vertexShader}
+              fragmentShader={points.shaders.material.fragmentShader}
               depthTest={false}
               transparent
               attach="material"
             />
             <instancedBufferGeometry
-              attributes={shaders.geometry?.attributes}
-              index={shaders.geometry?.index}
+              attributes={points.shaders.geometry.attributes}
+              index={points.shaders.geometry.index}
               attach="geometry"
             />
           </>
