@@ -4,7 +4,7 @@ import * as motion from "motion/react-client";
 import { useEffect } from "react";
 import { cn } from "@/lib/styles";
 import { useMouse } from "@/lib/hooks";
-import { useCursorActorRef, useCursorSelector } from "./cursor-store";
+import { useCursorActorRef, useCursorSelector } from "./store";
 
 export function Cursor() {
   const actorRef = useCursorActorRef();

@@ -26,7 +26,7 @@ export function Role() {
       initial="hidden"
       animate="show"
       aria-label={source}
-      className="text-primary font-sans font-semibold text-lg relative z-1 flex-none w-full h-auto whitespace-pre-wrap wrap-break-word"
+      className="text-primary font-sans font-semibold text-xl relative z-1 flex-none w-full h-auto whitespace-pre-wrap wrap-break-word"
     >
       {lines.map((line, index) => (
         <Fragment key={line.key}>

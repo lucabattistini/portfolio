@@ -3,7 +3,7 @@
 import { createElement, type ComponentProps } from "react";
 import { createActorContext } from "@xstate/react";
 import type { SnapshotFrom } from "xstate";
-import { createCursorMachine } from "./cursor-machine";
+import { createCursorMachine } from "./machine";
 
 type CursorMachine = ReturnType<typeof createCursorMachine>;
 export type CursorSnapshot = SnapshotFrom<CursorMachine>;
