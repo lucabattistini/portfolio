@@ -1,13 +1,13 @@
-import { Seniority } from "./seniority";
-import { Name } from "./name";
-import { Quote } from "./quote";
-import { Role } from "./role";
+import { Seniority } from './seniority';
+import { Name } from './name';
+import { Quote } from './quote';
+import { Role } from './role';
 
 export function Hero() {
   return (
-    <header className="relative flex flex-col flex-none items-center justify-start content-center gap-0 w-full h-screen p-0 overflow-visible">
-      <div className="relative flex flex-row flex-none items-end justify-between content-end w-full h-full px-16 pb-8 pt-0 overflow-visible">
-        <div className="relative flex flex-col flex-none items-start justify-end content-start gap-8 w-[67%] h-[77vh] p-0 overflow-visible">
+    <header className="relative flex h-screen w-full flex-none flex-col content-center items-center justify-start gap-0 overflow-visible p-0">
+      <div className="relative flex h-full w-full flex-none flex-row content-end items-end justify-between overflow-visible px-16 pt-0 pb-8">
+        <div className="relative flex h-[77vh] w-[67%] flex-none flex-col content-start items-start justify-end gap-8 overflow-visible p-0">
           <Seniority />
           <Name />
           <Role />

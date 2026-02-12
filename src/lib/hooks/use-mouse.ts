@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from 'react';
 
 export type MousePosition = {
   x: number;
@@ -25,10 +25,10 @@ export function useMouse(): MousePosition {
       });
     };
 
-    window.addEventListener("mousemove", handleMousemove, { passive: true });
+    window.addEventListener('mousemove', handleMousemove, { passive: true });
 
     return () => {
-      window.removeEventListener("mousemove", handleMousemove);
+      window.removeEventListener('mousemove', handleMousemove);
 
       if (frameRef.current !== null) {
         window.cancelAnimationFrame(frameRef.current);

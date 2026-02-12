@@ -1,23 +1,21 @@
-"use client";
+'use client';
 
-import * as motion from "motion/react-client";
-import { useEffect } from "react";
-import { cn } from "@/lib/styles";
-import { useMouse } from "@/lib/hooks";
-import { useCursorActorRef, useCursorSelector } from "./store";
+import * as motion from 'motion/react-client';
+import { useEffect } from 'react';
+import { cn } from '@/lib/styles';
+import { useMouse } from '@/lib/hooks';
+import { useCursorActorRef, useCursorSelector } from './store';
 
 export function Cursor() {
   const actorRef = useCursorActorRef();
   const mousePosition = useMouse();
 
-  const { isVisible, isStuck, isHovered, position, speed } = useCursorSelector(
-    (s) => s.context,
-  );
+  const { isVisible, isStuck, isHovered, position, speed } = useCursorSelector((s) => s.context);
 
   useEffect(() => {
-    actorRef.send({ type: "SHOW" });
+    actorRef.send({ type: 'SHOW' });
     const timer = setTimeout(() => {
-      actorRef.send({ type: "SET_SPEED", speed: 0.2 });
+      actorRef.send({ type: 'SET_SPEED', speed: 0.2 });
     }, 100);
 
     return () => clearTimeout(timer);
@@ -25,31 +23,31 @@ export function Cursor() {
 
   useEffect(() => {
     if (isStuck) return;
-    actorRef.send({ type: "SET_POSITION", position: mousePosition });
+    actorRef.send({ type: 'SET_POSITION', position: mousePosition });
   }, [actorRef, isStuck, mousePosition]);
 
   return (
     <>
       <motion.div
         className={cn(
-          "fixed",
-          "left-0",
-          "top-0",
-          "z-50",
-          "flex",
-          "h-16",
-          "w-16",
-          "-translate-x-1/2",
-          "-translate-y-1/2",
-          "origin-center",
-          "items-center",
-          "justify-center",
-          "overflow-visible",
-          "rounded-full",
-          "pointer-events-none",
-          "border-2",
-          isStuck ? "border-accent" : "border-primary",
-          isHovered ? "bg-accent opacity-60" : "bg-transparent",
+          'fixed',
+          'left-0',
+          'top-0',
+          'z-50',
+          'flex',
+          'h-16',
+          'w-16',
+          '-translate-x-1/2',
+          '-translate-y-1/2',
+          'origin-center',
+          'items-center',
+          'justify-center',
+          'overflow-visible',
+          'rounded-full',
+          'pointer-events-none',
+          'border-2',
+          isStuck ? 'border-accent' : 'border-primary',
+          isHovered ? 'bg-accent opacity-60' : 'bg-transparent',
         )}
         initial={{ opacity: 0 }}
         animate={{
@@ -63,17 +61,17 @@ export function Cursor() {
 
       <motion.div
         className={cn(
-          "fixed",
-          "left-0",
-          "top-0",
-          "z-50",
-          "h-2",
-          "w-2",
-          "-translate-x-1/2",
-          "-translate-y-1/2",
-          "rounded-full",
-          "bg-accent",
-          "pointer-events-none",
+          'fixed',
+          'left-0',
+          'top-0',
+          'z-50',
+          'h-2',
+          'w-2',
+          '-translate-x-1/2',
+          '-translate-y-1/2',
+          'rounded-full',
+          'bg-accent',
+          'pointer-events-none',
         )}
         initial={{ opacity: 0 }}
         animate={{

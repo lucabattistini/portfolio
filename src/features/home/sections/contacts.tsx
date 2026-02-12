@@ -1,24 +1,24 @@
-import { Section } from "@/components/section";
-import Link from "next/link";
+import { Section } from '@/components/section';
+import Link from 'next/link';
 
 const contacts = [
-  { title: "Phone", value: "+39 340 363 9577", href: "tel:+39 3403639577" },
+  { title: 'Phone', value: '+39 340 363 9577', href: 'tel:+39 3403639577' },
   {
-    title: "Email",
-    value: "hello@lucabattistini.dev",
-    href: "mailto:hello@lucabattistini.dev",
+    title: 'Email',
+    value: 'hello@lucabattistini.dev',
+    href: 'mailto:hello@lucabattistini.dev',
   },
   {
-    title: "GitHub",
-    value: "github.com/lucabattistini",
-    href: "https://github.com/lucabattistini",
+    title: 'GitHub',
+    value: 'github.com/lucabattistini',
+    href: 'https://github.com/lucabattistini',
   },
 ];
 
 const socials = [
-  { name: "Instagram", url: "https://instagram.com/lucabattistini" },
-  { name: "LinkedIn", url: "https://linkedin.com/lucabattistinidev" },
-  { name: "X", url: "https://x.com/lucabattistini_" },
+  { name: 'Instagram', url: 'https://instagram.com/lucabattistini' },
+  { name: 'LinkedIn', url: 'https://linkedin.com/lucabattistinidev' },
+  { name: 'X', url: 'https://x.com/lucabattistini_' },
 ];
 
 export function Contacts() {
@@ -35,7 +35,7 @@ export function Contacts() {
                 <div>
                   <h3>
                     <Link
-                      className="text-lg text-primary hover:text-accent transition font-sans font-bold pointer-events-auto"
+                      className="text-primary hover:text-accent pointer-events-auto font-sans text-lg font-bold transition"
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -58,7 +58,7 @@ export function Contacts() {
                 <div key={name}>
                   <h3>
                     <Link
-                      className="text-lg text-primary hover:text-accent transition font-sans font-bold pointer-events-auto"
+                      className="text-primary hover:text-accent pointer-events-auto font-sans text-lg font-bold transition"
                       href={url}
                       target="_blank"
                       rel="noopener noreferrer"

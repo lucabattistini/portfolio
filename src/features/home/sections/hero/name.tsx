@@ -1,7 +1,7 @@
-import * as motion from "motion/react-client";
-import { type Variants } from "motion";
-import { splitWords } from "@/lib/utils";
-import { Fragment } from "react/jsx-runtime";
+import * as motion from 'motion/react-client';
+import { type Variants } from 'motion';
+import { splitWords } from '@/lib/utils';
+import { Fragment } from 'react/jsx-runtime';
 
 const animation: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -16,7 +16,7 @@ const animation: Variants = {
 };
 
 export function Name() {
-  const { source, lines } = splitWords("Luca\nBattistini");
+  const { source, lines } = splitWords('Luca\nBattistini');
 
   return (
     <motion.h1
@@ -24,7 +24,7 @@ export function Name() {
       initial="hidden"
       animate="show"
       aria-label={source}
-      className="font-display uppercase text-primary text-right font-semibold leading-[0.9] tracking-wide text-[clamp(3rem,14vw,12.5rem)]"
+      className="font-display text-primary text-right text-[clamp(3rem,14vw,12.5rem)] leading-[0.9] font-semibold tracking-wide uppercase"
     >
       {lines.map((line, index) => (
         <Fragment key={line.key}>

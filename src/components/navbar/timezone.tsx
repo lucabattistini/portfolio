@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 export function Timezone() {
   const timezone = useMemo(() => {
@@ -15,6 +15,6 @@ export function Timezone() {
       return 'UTC+1';
     }
   }, []);
-  
-  return <span className="text-lg text-primary font-sans font-bold">({timezone})</span>;
+
+  return <span className="text-primary font-sans text-lg font-bold">({timezone})</span>;
 }

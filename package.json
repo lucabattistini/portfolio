@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
@@ -29,9 +30,12 @@
     "@types/three": "^0.182.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "eslint-config-prettier": "^10.1.8",
     "glsl-noise": "^0.0.0",
     "glslify": "^7.1.1",
     "glslify-loader": "^2.0.0",
+    "prettier": "3.8.1",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "raw-loader": "^4.0.2",
     "tailwindcss": "^4",
     "typescript": "^5"

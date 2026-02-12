@@ -1,4 +1,4 @@
-import { assign, createMachine } from "xstate";
+import { assign, createMachine } from 'xstate';
 
 export type CursorPosition = {
   x: number;
@@ -14,19 +14,19 @@ export type CursorContext = {
 };
 
 export type CursorEvent =
-  | { type: "SHOW" }
-  | { type: "HIDE" }
-  | { type: "SET_POSITION"; position: CursorPosition }
-  | { type: "SET_SPEED"; speed: number }
-  | { type: "STICK"; position: CursorPosition }
-  | { type: "UNSTICK" }
-  | { type: "HOVER" }
-  | { type: "UNHOVER" };
+  | { type: 'SHOW' }
+  | { type: 'HIDE' }
+  | { type: 'SET_POSITION'; position: CursorPosition }
+  | { type: 'SET_SPEED'; speed: number }
+  | { type: 'STICK'; position: CursorPosition }
+  | { type: 'UNSTICK' }
+  | { type: 'HOVER' }
+  | { type: 'UNHOVER' };
 
 export function createCursorMachine() {
   return createMachine({
-    id: "cursor",
-    initial: "hidden",
+    id: 'cursor',
+    initial: 'hidden',
     context: {
       isHovered: false,
       isStuck: false,
@@ -42,7 +42,7 @@ export function createCursorMachine() {
       hidden: {
         entry: assign({ isVisible: false }),
         on: {
-          SHOW: { target: "visible" },
+          SHOW: { target: 'visible' },
           SET_SPEED: { actions: assign({ speed: ({ event }) => event.speed }) },
           SET_POSITION: {
             actions: assign({ position: ({ event }) => event.position }),
@@ -52,7 +52,7 @@ export function createCursorMachine() {
       visible: {
         entry: assign({ isVisible: true }),
         on: {
-          HIDE: { target: "hidden" },
+          HIDE: { target: 'hidden' },
           SET_SPEED: { actions: assign({ speed: ({ event }) => event.speed }) },
           SET_POSITION: {
             actions: assign({ position: ({ event }) => event.position }),

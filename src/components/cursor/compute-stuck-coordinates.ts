@@ -1,4 +1,4 @@
-import type { CursorPosition } from "./machine";
+import type { CursorPosition } from './machine';
 
 export function computeStuckCoordinates(rect: DOMRect): CursorPosition {
   return {

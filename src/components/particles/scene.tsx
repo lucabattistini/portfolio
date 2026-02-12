@@ -86,7 +86,7 @@ export function ParticlesScene({
       uSizeAnimation.stop();
       uRandomAnimation.stop();
       uDepthAnimation.stop();
-    }
+    };
   }, [isVisible, uDepth, uRandom, uSize]);
 
   useEffect(() => {

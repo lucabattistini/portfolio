@@ -1,7 +1,4 @@
-import {
-  Texture,
-  Vector2,
-} from "three";
+import { Texture, Vector2 } from 'three';
 
 function easeOutSine(
   elapsed: number,
@@ -9,10 +6,7 @@ function easeOutSine(
   amountOfChange: number,
   duration: number,
 ) {
-  return (
-    amountOfChange * Math.sin((elapsed / duration) * (Math.PI / 2)) +
-    initialValue
-  );
+  return amountOfChange * Math.sin((elapsed / duration) * (Math.PI / 2)) + initialValue;
 }
 
 type Trail = {
@@ -34,22 +28,22 @@ export function createTouchTexture(): TouchTexture {
   const radius = 0.15;
   const trail: Trail[] = [];
 
-  const canvas = document.createElement("canvas");
+  const canvas = document.createElement('canvas');
   canvas.width = canvas.height = size;
-  const context = canvas.getContext("2d");
+  const context = canvas.getContext('2d');
 
   if (context !== null) {
-    context.fillStyle = "black";
+    context.fillStyle = 'black';
     context.fillRect(0, 0, canvas.width, canvas.height);
   }
 
   const texture = new Texture(canvas);
 
-  canvas.id = "pointerTexture";
+  canvas.id = 'pointerTexture';
   canvas.style.width = canvas.style.height = `${canvas.width}px`;
 
   const clear = () => {
-    context!.fillStyle = "black";
+    context!.fillStyle = 'black';
     context!.fillRect(0, 0, canvas.width, canvas.height);
   };
 
@@ -85,7 +79,6 @@ export function createTouchTexture(): TouchTexture {
       context.arc(pos.x, pos.y, normalizedRadius, 0, Math.PI * 2);
       context.fill();
     }
-  
   };
 
   const addPoint = (point: Vector2) => {

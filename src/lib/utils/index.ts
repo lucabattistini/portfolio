@@ -1,1 +1,1 @@
-export { splitWords, splitChars } from "./split-text";
+export { splitWords, splitChars } from './split-text';

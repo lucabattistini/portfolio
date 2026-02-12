@@ -4,7 +4,7 @@ type SplitWordsOptions = {
 };
 
 type WordToken = {
-  type: "word";
+  type: 'word';
   value: string;
   key: string;
   lineIndex: number;
@@ -12,7 +12,7 @@ type WordToken = {
 };
 
 type DelimToken = {
-  type: "delim";
+  type: 'delim';
   value: string;
   key: string;
   lineIndex: number;
@@ -31,7 +31,7 @@ type WordsTree = {
 };
 
 function splitPreserveDelimiter(line: string, splitBy: string): string[] {
-  if (splitBy === "") return [line];
+  if (splitBy === '') return [line];
 
   const parts = line.split(splitBy);
   const out: string[] = [];
@@ -44,22 +44,19 @@ function splitPreserveDelimiter(line: string, splitBy: string): string[] {
   return out;
 }
 
-export function splitWords(
-  text: string,
-  opts: SplitWordsOptions = {},
-): WordsTree {
-  const { splitBy = " ", scope = "" } = opts;
+export function splitWords(text: string, opts: SplitWordsOptions = {}): WordsTree {
+  const { splitBy = ' ', scope = '' } = opts;
 
-  const lines: WordsLine[] = text.split("\n").map((line, lineIndex) => {
+  const lines: WordsLine[] = text.split('\n').map((line, lineIndex) => {
     const pieces = splitPreserveDelimiter(line, splitBy);
 
     let tokenIndex = 0;
     const tokens: Array<WordToken | DelimToken> = [];
 
     pieces.forEach((piece) => {
-      if (splitBy !== "" && piece === splitBy) {
+      if (splitBy !== '' && piece === splitBy) {
         tokens.push({
-          type: "delim",
+          type: 'delim',
           value: piece,
           lineIndex,
           tokenIndex,
@@ -68,10 +65,10 @@ export function splitWords(
         return;
       }
 
-      if (piece === "") return;
+      if (piece === '') return;
 
       tokens.push({
-        type: "word",
+        type: 'word',
         value: piece,
         lineIndex,
         tokenIndex,
@@ -87,7 +84,7 @@ export function splitWords(
   });
 
   return {
-    source: text.replace(/\n/g, " "),
+    source: text.replace(/\n/g, ' '),
     lines,
   };
 }
@@ -112,13 +109,10 @@ type CharsTree = {
   lines: CharsLine[];
 };
 
-export function splitChars(
-  text: string,
-  opts: SplitCharsOptions = {},
-): CharsTree {
-  const scope = opts.scope ?? "";
+export function splitChars(text: string, opts: SplitCharsOptions = {}): CharsTree {
+  const scope = opts.scope ?? '';
 
-  const lines: CharsLine[] = text.split("\n").map((line, lineIndex) => {
+  const lines: CharsLine[] = text.split('\n').map((line, lineIndex) => {
     const chars: CharNode[] = Array.from(line).map((char, charIndex) => ({
       value: char,
       lineIndex,
