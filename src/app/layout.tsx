@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Space_Grotesk,  Bebas_Neue } from "next/font/google";
+import { Space_Grotesk, Bebas_Neue } from "next/font/google";
 import { ParticlesProvider } from "@/components/particles";
+import { Cursor, CursorProvider } from "@/components/cursor";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -11,12 +12,13 @@ const spaceGrotesk = Space_Grotesk({
 const bebasNeue = Bebas_Neue({
   variable: "--font-bebas-neue",
   subsets: ["latin"],
-  weight: "400"
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: "luca battistini — senior software engineer",
-  description: "hands-on software engineering with experience in technical leadership roles.",
+  title: "Luca Battistini — Senior Software Engineer",
+  description:
+    "Hands-on software engineering with experience in technical leadership roles.",
 };
 
 export default function RootLayout({
@@ -29,9 +31,12 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${bebasNeue.variable} antialiased`}
       >
-        <ParticlesProvider>
-          {children}
-        </ParticlesProvider>
+        <CursorProvider>
+          <ParticlesProvider>
+            <Cursor />
+            {children}
+          </ParticlesProvider>
+        </CursorProvider>
       </body>
     </html>
   );

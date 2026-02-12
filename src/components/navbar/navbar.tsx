@@ -1,8 +1,26 @@
+'use client';
+
 import * as motion from "motion/react-client";
 import Link from "next/link";
 import { Timezone } from "./timezone";
+import { computeStuckCoordinates, useCursorActorRef } from "../cursor";
 
 export function Navbar() {
+  const cursorActor = useCursorActorRef();
+
+  const onPointerEnter = (event: React.PointerEvent<HTMLAnchorElement>) => {
+    cursorActor.send({
+      type: "STICK",
+      position: computeStuckCoordinates(
+        event.currentTarget.getBoundingClientRect(),
+      ),
+    });
+  };
+
+  const onPointerLeave = () => {
+    cursorActor.send({ type: "UNSTICK" });
+  };
+
   return (
     <nav className="fixed max-w-384 flex items-start justify-between gap-0 w-full h-min p-0 overflow-visible z-20 top-8 px-16">
       <div className="relative flex items-center gap-4 w-full h-auto select-none">
@@ -54,6 +72,8 @@ export function Navbar() {
               download
               target="_blank"
               rel="noopener noreferrer"
+              onPointerEnter={onPointerEnter}
+              onPointerLeave={onPointerLeave}
             >
               Download Resume
             </Link>
@@ -64,6 +84,8 @@ export function Navbar() {
               href="mailto:hello@lucabattistini.dev"
               target="_blank"
               rel="noopener noreferrer"
+              onPointerEnter={onPointerEnter}
+              onPointerLeave={onPointerLeave}
             >
               Contact Me
             </Link>
