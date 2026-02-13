@@ -11,12 +11,6 @@ type Config = {
   multiplier?: number;
 };
 
-/**
- * Returns true when the user scrolls past `multiplier * viewportHeight`.
- *
- * - `multiplier = 1` means 100vh
- * - `multiplier = 1.5` means 150vh
- */
 export function useIsBeyondFold({ multiplier = 1 }: Config) {
   const { scrollY } = useScroll();
   const [pastViewport, setPastViewport] = useState(false);

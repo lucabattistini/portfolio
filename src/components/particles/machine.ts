@@ -9,8 +9,7 @@ export type ParticlesEvent =
   | { type: 'SHOW' }
   | { type: 'HIDE' }
   | { type: 'EXPLODE' }
-  | { type: 'UNEXPLODE' }
-  | { type: 'TOGGLE_EXPLODE' };
+  | { type: 'REPAIR' };
 
 export function createParticlesMachine() {
   return createMachine({
@@ -36,10 +35,7 @@ export function createParticlesMachine() {
         on: {
           HIDE: { target: 'hidden' },
           EXPLODE: { actions: assign({ isExploded: true }) },
-          UNEXPLODE: { actions: assign({ isExploded: false }) },
-          TOGGLE_EXPLODE: {
-            actions: assign(({ context }) => ({ isExploded: !context.isExploded })),
-          },
+          REPAIR: { actions: assign({ isExploded: false }) },
         },
       },
     },

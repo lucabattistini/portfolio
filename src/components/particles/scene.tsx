@@ -6,12 +6,14 @@ import { type ThreeEvent, useFrame, useThree } from '@react-three/fiber';
 import {
   Color,
   type InstancedBufferGeometry,
+  MathUtils,
+  type Group,
   type Mesh,
   type PerspectiveCamera,
   type RawShaderMaterial,
 } from 'three';
 import { animate } from 'motion';
-import { useMotionValue } from 'motion/react';
+import { type MotionValue, useMotionValue, useSpring } from 'motion/react';
 import { usePoints } from './use-points';
 import { useParticlesActorRef, useParticlesSelector } from './store';
 import { getTextureImage } from './texture-image';
@@ -20,22 +22,37 @@ export type ParticlesSceneProps = {
   colorThreshold?: number;
   picture: string;
   scaleCoefficient: number;
+  pan?: {
+    progress: MotionValue<number>;
+    fraction: number;
+  };
 };
 
 export function ParticlesScene({
   colorThreshold = 34,
   picture,
   scaleCoefficient,
+  pan,
 }: ParticlesSceneProps) {
   const actorRef = useParticlesActorRef();
   const { isVisible, isExploded } = useParticlesSelector((s) => s.context);
   const texture = useTexture(picture);
   const image = getTextureImage(texture);
+  const groupRef = useRef<Group | null>(null);
   const meshRef = useRef<Mesh<InstancedBufferGeometry, RawShaderMaterial> | null>(null);
   const points = usePoints(texture, colorThreshold);
   const uSize = useMotionValue(0.5);
   const uRandom = useMotionValue(1.0);
   const uDepth = useMotionValue(40.0);
+  const viewport = useThree((state) => state.viewport);
+  const fallbackProgress = useMotionValue(0);
+  const smoothProgress = useSpring(pan?.progress ?? fallbackProgress, {
+    stiffness: 75,
+    damping: 36,
+    mass: 1.8,
+    restDelta: 0.0005,
+    restSpeed: 0.01,
+  });
 
   const handleOnMove = useCallback(
     (e: ThreeEvent<PointerEvent>) => {
@@ -111,6 +128,14 @@ export function ParticlesScene({
   }, [isExploded, uDepth, uRandom]);
 
   useFrame((_, clockDelta) => {
+    if (groupRef.current) {
+      const viewportWidth = viewport.width;
+      const clampedProgress = Math.min(1, Math.max(0, smoothProgress.get()));
+      const targetX = clampedProgress * viewportWidth * (pan?.fraction ?? 0);
+
+      groupRef.current.position.x = MathUtils.lerp(groupRef.current.position.x, targetX, 0.08);
+    }
+
     if (points.status === 'ready' && meshRef.current && meshRef.current.material.uniforms) {
       const uniforms = meshRef.current.material.uniforms;
 
@@ -125,38 +150,40 @@ export function ParticlesScene({
 
   return (
     <>
-      <mesh ref={meshRef} scale={[scale, scale, 1]}>
-        {points.status === 'ready' ? (
-          <>
-            <rawShaderMaterial
-              uniforms={points.shaders.material.uniforms}
-              vertexShader={points.shaders.material.vertexShader}
-              fragmentShader={points.shaders.material.fragmentShader}
-              depthTest={false}
-              transparent
-              attach="material"
-            />
-            <instancedBufferGeometry
-              attributes={points.shaders.geometry.attributes}
-              index={points.shaders.geometry.index}
-              attach="geometry"
-            />
-          </>
-        ) : null}
-      </mesh>
+      <group ref={groupRef}>
+        <mesh ref={meshRef} scale={[scale, scale, 1]}>
+          {points.status === 'ready' ? (
+            <>
+              <rawShaderMaterial
+                uniforms={points.shaders.material.uniforms}
+                vertexShader={points.shaders.material.vertexShader}
+                fragmentShader={points.shaders.material.fragmentShader}
+                depthTest={false}
+                transparent
+                attach="material"
+              />
+              <instancedBufferGeometry
+                attributes={points.shaders.geometry.attributes}
+                index={points.shaders.geometry.index}
+                attach="geometry"
+              />
+            </>
+          ) : null}
+        </mesh>
 
-      <mesh scale={[scale, scale, 1]} onPointerMove={handleOnMove}>
-        <meshBasicMaterial
-          color={new Color(0xffffff)}
-          depthTest={false}
-          visible={false}
-          wireframe={false}
-          attach="material"
-        />
-        {image ? (
-          <planeGeometry args={[image.width, image.height, 1, 1]} attach="geometry" />
-        ) : null}
-      </mesh>
+        <mesh scale={[scale, scale, 1]} onPointerMove={handleOnMove}>
+          <meshBasicMaterial
+            color={new Color(0xffffff)}
+            depthTest={false}
+            visible={false}
+            wireframe={false}
+            attach="material"
+          />
+          {image ? (
+            <planeGeometry args={[image.width, image.height, 1, 1]} attach="geometry" />
+          ) : null}
+        </mesh>
+      </group>
     </>
   );
 }

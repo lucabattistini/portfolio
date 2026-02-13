@@ -8,7 +8,7 @@ import { Hero } from './sections/hero/hero';
 import { Hobbies } from './sections/hobbies';
 import { Languages } from './sections/languages';
 import { Skills } from './sections/skills';
-import { Thanks } from './sections/thanks/thanks';
+import { Footer } from './sections/footer/footer';
 
 export function Home() {
   return (
@@ -26,7 +26,7 @@ export function Home() {
           <Hobbies />
           <Contacts />
         </div>
-        <Thanks />
+        <Footer />
       </article>
       <NavAnchor />
     </main>

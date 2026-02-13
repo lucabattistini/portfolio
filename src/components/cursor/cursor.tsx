@@ -10,7 +10,7 @@ export function Cursor() {
   const actorRef = useCursorActorRef();
   const mousePosition = useMouse();
 
-  const { isVisible, isStuck, isHovered, position, speed } = useCursorSelector((s) => s.context);
+  const { isVisible, isHovered, position, speed } = useCursorSelector((s) => s.context);
 
   useEffect(() => {
     actorRef.send({ type: 'SHOW' });
@@ -22,9 +22,8 @@ export function Cursor() {
   }, [actorRef]);
 
   useEffect(() => {
-    if (isStuck) return;
     actorRef.send({ type: 'SET_POSITION', position: mousePosition });
-  }, [actorRef, isStuck, mousePosition]);
+  }, [actorRef, mousePosition]);
 
   return (
     <>
@@ -46,12 +45,12 @@ export function Cursor() {
           'rounded-full',
           'pointer-events-none',
           'border-2',
-          isStuck ? 'border-accent' : 'border-primary',
-          isHovered ? 'bg-accent opacity-60' : 'bg-transparent',
+          'border-primary',
+          isHovered ? 'border-accent bg-accent/60' : 'bg-transparent',
         )}
         initial={{ opacity: 0 }}
         animate={{
-          opacity: isVisible ? (isHovered ? 0.6 : isStuck ? 0.8 : 0.2) : 0,
+          opacity: isVisible ? (isHovered ? 0.6 : 0.2) : 0,
           x: position.x,
           y: position.y,
         }}

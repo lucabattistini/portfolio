@@ -15,16 +15,17 @@ const animation: Variants = {
   },
 };
 
-export function Name() {
-  const { source, lines } = splitWords('Luca\nBattistini');
+export function Thanks() {
+  const { source, lines } = splitWords('Catch you\nin the next\none');
 
   return (
     <motion.h1
       variants={animation}
       initial="hidden"
-      animate="show"
+      whileInView="show"
+      viewport={{ once: true, amount: 0.4 }}
       aria-label={source}
-      className="font-display text-primary text-right text-[clamp(3rem,14vw,12.5rem)] leading-[0.9] font-bold tracking-wide wrap-break-word whitespace-pre-wrap"
+      className="font-display text-primary self-start text-[clamp(3rem,14vw,12.5rem)] leading-[0.9] font-bold wrap-break-word whitespace-pre-wrap uppercase"
     >
       {lines.map((line, index) => (
         <Fragment key={line.key}>

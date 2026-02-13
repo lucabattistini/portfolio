@@ -7,7 +7,6 @@ export type CursorPosition = {
 
 export type CursorContext = {
   isHovered: boolean;
-  isStuck: boolean;
   isVisible: boolean;
   position: CursorPosition;
   speed: number;
@@ -18,8 +17,6 @@ export type CursorEvent =
   | { type: 'HIDE' }
   | { type: 'SET_POSITION'; position: CursorPosition }
   | { type: 'SET_SPEED'; speed: number }
-  | { type: 'STICK'; position: CursorPosition }
-  | { type: 'UNSTICK' }
   | { type: 'HOVER' }
   | { type: 'UNHOVER' };
 
@@ -29,7 +26,6 @@ export function createCursorMachine() {
     initial: 'hidden',
     context: {
       isHovered: false,
-      isStuck: false,
       isVisible: false,
       position: { x: -80, y: -80 },
       speed: 0,
@@ -57,13 +53,6 @@ export function createCursorMachine() {
           SET_POSITION: {
             actions: assign({ position: ({ event }) => event.position }),
           },
-          STICK: {
-            actions: assign({
-              isStuck: true,
-              position: ({ event }) => event.position,
-            }),
-          },
-          UNSTICK: { actions: assign({ isStuck: false }) },
           HOVER: { actions: assign({ isHovered: true }) },
           UNHOVER: { actions: assign({ isHovered: false }) },
         },

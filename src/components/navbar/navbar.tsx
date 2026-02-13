@@ -1,18 +1,18 @@
 'use client';
 
 import * as motion from 'motion/react-client';
+import { type Variants } from 'motion/react';
 import Link from 'next/link';
 import { Timezone } from './timezone';
-import { computeStuckCoordinates, useCursorActorRef } from '../cursor';
-import { type Variants } from 'motion/react';
+import { useCursorActorRef } from '../cursor';
 
 const animation: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
     transition: {
-      delay: 0.4,
-      duration: 0.8,
+      delay: 0.6,
+      duration: 0.6,
       ease: [0.22, 1, 0.36, 1],
     },
   },
@@ -21,28 +21,27 @@ const animation: Variants = {
 export function Navbar() {
   const cursorActor = useCursorActorRef();
 
-  const onPointerEnter = (event: React.PointerEvent<HTMLAnchorElement>) => {
+  const onPointerEnter = () => {
     cursorActor.send({
-      type: 'STICK',
-      position: computeStuckCoordinates(event.currentTarget.getBoundingClientRect()),
+      type: 'HOVER',
     });
   };
 
   const onPointerLeave = () => {
-    cursorActor.send({ type: 'UNSTICK' });
+    cursorActor.send({ type: 'UNHOVER' });
   };
 
   return (
-    <nav className="fixed top-8 z-20 flex h-min w-full max-w-384 items-start justify-between gap-0 overflow-visible p-0 px-16">
-      <motion.div
-        variants={animation}
-        initial="hidden"
-        animate="show"
-        className="relative flex h-auto w-full items-center gap-4 select-none"
-      >
+    <motion.nav
+      variants={animation}
+      initial="hidden"
+      animate="show"
+      className="fixed top-8 z-20 flex w-full max-w-384 items-start justify-between px-16"
+    >
+      <div className="relative flex w-full items-center gap-4 select-none">
         <p className="text-primary font-sans text-xl font-bold">Luca Battistini</p>
-        <div className="relative flex flex-row items-center gap-2">
-          <i className="relative h-3 w-3 flex-none overflow-visible">
+        <div className="relative flex items-center gap-2">
+          <i className="relative h-3 w-3">
             <motion.span
               className="bg-accent absolute h-3 w-3 rounded-full"
               animate={{
@@ -72,7 +71,7 @@ export function Navbar() {
           </i>
           <p className="text-accent font-sans text-xl font-semibold">Available for work</p>
         </div>
-      </motion.div>
+      </div>
       <div className="relative flex w-1/4 justify-between">
         <ul className="relative flex flex-col">
           <li>
@@ -105,6 +104,6 @@ export function Navbar() {
           <Timezone />
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
