@@ -3,7 +3,7 @@ import { Section } from '@/components/section';
 export function Experience() {
   return (
     <Section name="02. Experience">
-      <div>
+      <Section.Reveal>
         <div>
           <div>
             <p>Remote • 2026-Present</p>
@@ -15,7 +15,7 @@ export function Experience() {
         <div>
           <p>Hands-on software engineering with experience in technical leadership roles.</p>
         </div>
-      </div>
+      </Section.Reveal>
     </Section>
   );
 }

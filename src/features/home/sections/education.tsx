@@ -3,7 +3,7 @@ import { Section } from '@/components/section';
 export function Education() {
   return (
     <Section name="04. Education">
-      <div>
+      <Section.Reveal>
         <div>
           <div>
             <p>University of Southern California • 2010–2014</p>
@@ -19,7 +19,7 @@ export function Education() {
             aspects of programming
           </p>
         </div>
-      </div>
+      </Section.Reveal>
     </Section>
   );
 }

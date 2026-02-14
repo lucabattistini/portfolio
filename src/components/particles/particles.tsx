@@ -38,7 +38,6 @@ export function Particles({ colorThreshold = 34, picture, className }: Particles
         aria-hidden
         className="pointer-events-none absolute top-0 left-0 h-screen w-px"
       />
-
       <figure className={cn('fixed top-0 left-0 h-full w-full', className)}>
         <Canvas
           camera={{

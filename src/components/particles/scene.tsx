@@ -81,7 +81,7 @@ export function ParticlesScene({
   useEffect(() => {
     const baseDuration = 0.9;
 
-    const uSizeAnimation = animate(uSize.get(), isVisible ? 1.0 : 0.5, {
+    const uSizeAnimation = animate(uSize.get(), isVisible ? 1.05 : 0.5, {
       duration: baseDuration,
       ease: 'easeOut',
       onUpdate: (latest) => uSize.set(latest),
