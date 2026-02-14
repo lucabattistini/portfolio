@@ -35,7 +35,7 @@ export function Payoff() {
       whileInView="show"
       viewport={{ once: true, amount: 0.4 }}
       aria-label={source}
-      className="text-accent w-[50%] self-center font-sans text-4xl leading-[0.9] font-bold tracking-wide wrap-break-word whitespace-pre-wrap"
+      className="text-accent w-[50%] self-end font-sans text-4xl leading-[0.9] font-bold tracking-wide wrap-break-word whitespace-pre-wrap"
     >
       {lines.map((line, index) => (
         <Fragment key={line.key}>

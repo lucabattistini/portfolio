@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useCopyToClipboard } from '@/lib/hooks';
 import Copy from '@public/copy.svg';
 import CopyCheck from '@public/copy-check.svg';
+import { computeStuckCoordinates, useCursorActorRef } from '@/components/cursor';
 
 const contacts = [
   {
@@ -48,6 +49,26 @@ const socials = [
 function CallToAction({ href, value, copy }: { href: string; value: string; copy?: boolean }) {
   const { copied, copyToClipboard } = useCopyToClipboard();
   const hasCopied = Boolean(copied);
+  const cursorActor = useCursorActorRef();
+
+  const onPointerEnter = (event: React.PointerEvent, stick?: boolean) => {
+    if (stick) {
+      cursorActor.send({
+        type: 'STICK',
+        position: computeStuckCoordinates(event.currentTarget.getBoundingClientRect()),
+      });
+    } else {
+      cursorActor.send({ type: 'HOVER' });
+    }
+  };
+
+  const onPointerLeave = (stick?: boolean) => {
+    if (stick) {
+      cursorActor.send({ type: 'UNSTICK' });
+    } else {
+      cursorActor.send({ type: 'UNHOVER' });
+    }
+  };
 
   return (
     <div className="flex items-center gap-4">
@@ -57,6 +78,8 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
           href={href}
           target="_blank"
           rel="noopener noreferrer"
+          onPointerEnter={onPointerEnter}
+          onPointerLeave={() => onPointerLeave()}
         >
           {value}
         </Link>
@@ -66,6 +89,8 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
           onClick={() => copyToClipboard(value)}
           type="button"
           className="text-primary hover:text-accent pointer-events-auto flex cursor-pointer items-center gap-2 text-xs transition"
+          onPointerEnter={(event) => onPointerEnter(event, true)}
+          onPointerLeave={() => onPointerLeave(true)}
         >
           {!hasCopied ? (
             <Copy className="inline-flex h-5 w-5" fill="currentColor" />
@@ -79,6 +104,16 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
 }
 
 export function Contacts() {
+  const cursorActor = useCursorActorRef();
+
+  const onPointerEnter = () => {
+    cursorActor.send({ type: 'HOVER' });
+  };
+
+  const onPointerLeave = () => {
+    cursorActor.send({ type: 'UNHOVER' });
+  };
+
   return (
     <Section name="07. Contacts">
       <div className="flex flex-col gap-10">
@@ -99,6 +134,8 @@ export function Contacts() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onPointerEnter={onPointerEnter}
+                    onPointerLeave={onPointerLeave}
                   >
                     {name}
                   </Link>

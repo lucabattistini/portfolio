@@ -16,7 +16,7 @@ const animation: Variants = {
 };
 
 export function Thanks() {
-  const { source, lines } = splitWords('Catch you\nin the next\none');
+  const { source, lines } = splitWords("Be part of\nwhat's\nnext");
 
   return (
     <motion.h1

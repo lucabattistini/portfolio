@@ -38,7 +38,7 @@ export function Navbar() {
       animate="show"
       className="fixed top-8 z-20 flex w-full max-w-384 items-start justify-between px-16"
     >
-      <div className="relative flex w-full items-center gap-4 select-none">
+      <div className="relative flex w-[67%] items-center gap-4 select-none">
         <p className="text-primary font-sans text-xl font-bold">Luca Battistini</p>
         <div className="relative flex items-center gap-2">
           <i className="relative h-3 w-3">

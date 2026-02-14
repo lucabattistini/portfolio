@@ -49,7 +49,7 @@ export function NavAnchor() {
       animate="show"
       className="fixed bottom-8 z-20 flex h-min w-full max-w-384 items-start justify-between gap-0 overflow-visible p-0 px-16"
     >
-      <div className="relative flex h-auto w-full items-center gap-4"></div>
+      <div className="relative flex h-auto w-[67%] items-center gap-4"></div>
       <div className="relative flex w-1/4 justify-between">
         <button
           onPointerEnter={onPointerEnter}

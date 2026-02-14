@@ -10,7 +10,7 @@ export function Cursor() {
   const actorRef = useCursorActorRef();
   const mousePosition = useMouse();
 
-  const { isVisible, isHovered, position, speed } = useCursorSelector((s) => s.context);
+  const { isVisible, isHovered, isStuck, position, speed } = useCursorSelector((s) => s.context);
 
   useEffect(() => {
     actorRef.send({ type: 'SHOW' });
@@ -22,35 +22,22 @@ export function Cursor() {
   }, [actorRef]);
 
   useEffect(() => {
+    if (isStuck) return;
+
     actorRef.send({ type: 'SET_POSITION', position: mousePosition });
-  }, [actorRef, mousePosition]);
+  }, [actorRef, isStuck, mousePosition]);
 
   return (
     <>
       <motion.div
         className={cn(
-          'fixed',
-          'left-0',
-          'top-0',
-          'z-50',
-          'flex',
-          'h-16',
-          'w-16',
-          '-translate-x-1/2',
-          '-translate-y-1/2',
-          'origin-center',
-          'items-center',
-          'justify-center',
-          'overflow-visible',
-          'rounded-full',
-          'pointer-events-none',
-          'border-2',
-          'border-primary',
+          'border-primary pointer-events-none fixed top-0 left-0 z-50 flex h-16 w-16 origin-center -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-visible rounded-full border-2',
           isHovered ? 'border-accent bg-accent/60' : 'bg-transparent',
+          { 'border-accent': isStuck },
         )}
         initial={{ opacity: 0 }}
         animate={{
-          opacity: isVisible ? (isHovered ? 0.6 : 0.2) : 0,
+          opacity: isVisible ? (isHovered ? 0.6 : isStuck ? 0.8 : 0.2) : 0,
           x: position.x,
           y: position.y,
         }}
@@ -60,17 +47,7 @@ export function Cursor() {
 
       <motion.div
         className={cn(
-          'fixed',
-          'left-0',
-          'top-0',
-          'z-50',
-          'h-2',
-          'w-2',
-          '-translate-x-1/2',
-          '-translate-y-1/2',
-          'rounded-full',
-          'bg-accent',
-          'pointer-events-none',
+          'bg-accent pointer-events-none fixed top-0 left-0 z-50 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full',
         )}
         initial={{ opacity: 0 }}
         animate={{
