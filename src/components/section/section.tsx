@@ -44,7 +44,7 @@ export function Section({ name, children }: SectionProps) {
       <h2 className="text-primary shrink-0 grow-4 basis-0 font-sans text-4xl font-semibold uppercase">
         {name}
       </h2>
-      <div className="text-primary relative flex h-min w-px shrink-0 grow-4 basis-0 flex-col gap-20 p-0 font-sans text-lg font-normal">
+      <div className="text-primary relative flex h-min w-px shrink-0 grow-4 basis-0 flex-col gap-20 p-0 font-sans text-lg font-normal leading-6.5">
         {children}
       </div>
     </section>

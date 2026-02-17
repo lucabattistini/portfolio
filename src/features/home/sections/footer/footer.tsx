@@ -10,10 +10,6 @@ export function Footer() {
           <Payoff />
         </div>
         <div className="flex flex-col">
-          <p className="text-primary font-sans text-xl font-semibold">he / him</p>
-          <p className="text-primary font-sans text-xl font-semibold">
-            1993 / {new Date().getFullYear()}
-          </p>
           <p className="text-primary font-sans text-xl font-semibold">VAT No. IT 04841180401</p>
         </div>
       </div>

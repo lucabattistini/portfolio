@@ -1,34 +1,32 @@
 import { Section } from '@/components/section';
 
 const skills = [
-  'JavaScript',
   'TypeScript',
+  'JavaScript',
   'React',
   'Next.js',
-  'Node.js',
-  'Express',
-  'GraphQL',
-  'PostgreSQL',
-  'MongoDB',
-  'Git',
-  'CI/CD',
-  'AWS',
+  'React Native',
+  'Frontend Architecture',
+  'Design Systems',
+  'Microfrontends',
+  'API Design',
   'System Design',
-  'AI',
-  'Technical Writing',
-  'Code Reviews',
-  'Performance Optimization',
-  'Product Thinking',
-  'Testing',
-  'Debugging',
-  'Remote Collaboration',
+  'CI/CD',
+  'Node.js',
+  'Fastify',
+  'PostgreSQL',
+  'AWS',
+  'Infrastructure as Code',
+  'TDD',
+  'DevEx',
+  'AI Engineering',
 ];
 
 export function Skills() {
   return (
-    <Section name="03. Skills">
+    <Section name="Skills">
       <Section.Reveal>
-        <ul className="relative flex shrink-0 grow basis-0 flex-wrap content-center items-center justify-start gap-2">
+        <ul className="relative flex shrink-0 grow basis-0 flex-wrap content-center items-center justify-start gap-3">
           {skills.map((skill) => (
             <li
               key={skill}

@@ -77,7 +77,7 @@ export function Navbar() {
           <li>
             <Link
               className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
-              href="/luca-battistini-resume.pdf"
+              href="/resume.pdf"
               download
               target="_blank"
               rel="noopener noreferrer"

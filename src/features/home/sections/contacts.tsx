@@ -115,7 +115,7 @@ export function Contacts() {
   };
 
   return (
-    <Section name="07. Contacts">
+    <Section name="Contacts">
       <div className="flex flex-col gap-10">
         {contacts.map(({ title, value, href, copy }) => (
           <Section.Reveal key={title} className="flex flex-col gap-2">

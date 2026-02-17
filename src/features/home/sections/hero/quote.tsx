@@ -37,7 +37,7 @@ export function Quote() {
         initial="hidden"
         animate="show"
         aria-label={source}
-        className="text-accent relative h-auto w-full flex-none justify-start font-sans text-2xl font-semibold wrap-break-word whitespace-pre-wrap"
+        className="text-accent relative h-auto w-full flex-none justify-start font-sans text-2xl leading-[0.9] font-semibold wrap-break-word whitespace-pre-wrap"
       >
         {lines.map((line, index) => (
           <Fragment key={line.key}>
