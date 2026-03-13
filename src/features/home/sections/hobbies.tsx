@@ -1,7 +1,18 @@
+import { useCursorActorRef } from '@/components/cursor/store';
 import { Section } from '@/components/section';
 import Link from 'next/link';
 
 export function Hobbies() {
+  const cursorActor = useCursorActorRef();
+
+  const onPointerEnter = () => {
+    cursorActor.send({ type: 'HOVER' });
+  };
+
+  const onPointerLeave = () => {
+    cursorActor.send({ type: 'UNHOVER' });
+  };
+
   return (
     <Section name="Hobbies">
       <Section.Reveal>
@@ -12,6 +23,8 @@ export function Hobbies() {
             href="https://linktr.ee/wearenoye"
             target="_blank"
             rel="noopener noreferrer"
+            onPointerEnter={onPointerEnter}
+            onPointerLeave={onPointerLeave}
           >
             NOYÉ
           </Link>
