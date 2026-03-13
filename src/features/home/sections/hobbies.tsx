@@ -8,7 +8,7 @@ export function Hobbies() {
         <p>
           Beyond software engineering, I blast my bass and scream my lungs out as part of my band
           <Link
-            className="mx-1 hover:text-accent pointer-events-auto transition"
+            className="hover:text-accent pointer-events-auto mx-1 transition"
             href="https://linktr.ee/wearenoye"
             target="_blank"
             rel="noopener noreferrer"

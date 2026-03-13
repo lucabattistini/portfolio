@@ -24,7 +24,7 @@ export function Name() {
       initial="hidden"
       animate="show"
       aria-label={source}
-      className="font-display text-primary text-right text-[clamp(3rem,14vw,12.5rem)] leading-[0.9] font-bold tracking-wide wrap-break-word whitespace-pre-wrap"
+      className="font-display text-primary w-full text-right text-[clamp(3rem,24vw,12.5rem)] leading-[0.9] font-bold tracking-wide wrap-break-word whitespace-pre-wrap"
     >
       {lines.map((line, index) => (
         <Fragment key={line.key}>

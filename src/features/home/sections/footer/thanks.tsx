@@ -25,7 +25,7 @@ export function Thanks() {
       whileInView="show"
       viewport={{ once: true, amount: 0.4 }}
       aria-label={source}
-      className="font-display text-primary self-start text-[clamp(3rem,14vw,12.5rem)] leading-[0.9] font-bold wrap-break-word whitespace-pre-wrap uppercase"
+      className="font-display text-primary w-full self-start text-[clamp(3rem,24vw,12.5rem)] leading-[0.9] font-bold wrap-break-word whitespace-pre-wrap uppercase md:col-span-2"
     >
       {lines.map((line, index) => (
         <Fragment key={line.key}>

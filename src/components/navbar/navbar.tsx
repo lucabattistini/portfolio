@@ -5,6 +5,8 @@ import { type Variants } from 'motion/react';
 import Link from 'next/link';
 import { Timezone } from './timezone';
 import { useCursorActorRef } from '../cursor';
+import { useMobileDetect } from '@/lib/hooks';
+import { NavMenu } from './nav-menu';
 
 const animation: Variants = {
   hidden: { opacity: 0 },
@@ -19,6 +21,7 @@ const animation: Variants = {
 };
 
 export function Navbar() {
+  const isMobile = useMobileDetect();
   const cursorActor = useCursorActorRef();
 
   const onPointerEnter = () => {
@@ -36,9 +39,9 @@ export function Navbar() {
       variants={animation}
       initial="hidden"
       animate="show"
-      className="fixed top-8 z-20 flex w-full max-w-384 items-start justify-between px-16"
+      className="fixed top-8 z-20 flex w-full items-start justify-between px-8 md:max-w-384 md:px-16"
     >
-      <div className="relative flex w-[67%] items-center gap-4 select-none">
+      <div className="relative flex flex-col gap-1 select-none md:w-[67%] md:flex-row md:items-center md:gap-4">
         <p className="text-primary font-sans text-xl font-bold">Luca Battistini</p>
         <div className="relative flex items-center gap-2">
           <i className="relative h-3 w-3">
@@ -72,38 +75,42 @@ export function Navbar() {
           <p className="text-accent font-sans text-xl font-semibold">Available for work</p>
         </div>
       </div>
-      <div className="relative flex w-1/4 justify-between">
-        <ul className="relative flex flex-col">
-          <li>
-            <Link
-              className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
-              href="/resume.pdf"
-              download
-              target="_blank"
-              rel="noopener noreferrer"
-              onPointerEnter={onPointerEnter}
-              onPointerLeave={onPointerLeave}
-            >
-              Download Resume
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
-              href="mailto:hello@lucabattistini.dev"
-              target="_blank"
-              rel="noopener noreferrer"
-              onPointerEnter={onPointerEnter}
-              onPointerLeave={onPointerLeave}
-            >
-              Contact Me
-            </Link>
-          </li>
-        </ul>
-        <div className="relative flex flex-none flex-col items-center justify-start select-none">
-          <Timezone />
+      {isMobile ? (
+        <NavMenu />
+      ) : (
+        <div className="relative flex w-1/4 justify-between">
+          <ul className="relative flex flex-col">
+            <li>
+              <Link
+                className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
+                href="/resume.pdf"
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                onPointerEnter={onPointerEnter}
+                onPointerLeave={onPointerLeave}
+              >
+                Download Resume
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
+                href="mailto:hello@lucabattistini.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+                onPointerEnter={onPointerEnter}
+                onPointerLeave={onPointerLeave}
+              >
+                Contact Me
+              </Link>
+            </li>
+          </ul>
+          <div className="relative flex flex-none flex-col items-center justify-start select-none">
+            <Timezone />
+          </div>
         </div>
-      </div>
+      )}
     </motion.nav>
   );
 }

@@ -35,7 +35,7 @@ export function ParticlesScene({
   pan,
 }: ParticlesSceneProps) {
   const actorRef = useParticlesActorRef();
-  const { isVisible, isExploded } = useParticlesSelector((s) => s.context);
+  const { isVisible, isExploded } = useParticlesSelector((snapshot) => snapshot.context);
   const texture = useTexture(picture);
   const image = getTextureImage(texture);
   const groupRef = useRef<Group | null>(null);

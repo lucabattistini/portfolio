@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Space_Grotesk, Bebas_Neue } from 'next/font/google';
 import { ParticlesProvider } from '@/components/particles';
 import { Cursor, CursorProvider } from '@/components/cursor';
+import { NavbarProvider } from '@/components/navbar';
 import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,8 +31,10 @@ export default function RootLayout({
       <body className={`${spaceGrotesk.variable} ${bebasNeue.variable} antialiased`}>
         <CursorProvider>
           <ParticlesProvider>
+            <NavbarProvider>
             <Cursor />
             {children}
+            </NavbarProvider>
           </ParticlesProvider>
         </CursorProvider>
       </body>

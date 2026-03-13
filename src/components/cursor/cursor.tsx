@@ -10,7 +10,7 @@ export function Cursor() {
   const actorRef = useCursorActorRef();
   const mousePosition = useMouse();
 
-  const { isVisible, isHovered, isStuck, position, speed } = useCursorSelector((s) => s.context);
+  const { isVisible, isHovered, isStuck, position, speed } = useCursorSelector((snapshot) => snapshot.context);
 
   useEffect(() => {
     actorRef.send({ type: 'SHOW' });

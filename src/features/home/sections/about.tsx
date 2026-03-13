@@ -8,9 +8,10 @@ export function About() {
           I am a born and raised Italian software engineer who tries to make the www a better place.
         </p>
         <p>
-          Over the years, my focus evolved from crafting interfaces to designing scalable frontend
-          architectures and platform foundations. I work where systems start to grow complex — where
-          structure, clarity, and long-term thinking matter more than short-term delivery.
+          Over time, I moved from crafting interfaces to designing the systems behind them —
+          focusing on scalable frontend architectures and the platform foundations that support
+          them. I am most engaged where complexity emerges and structure, clarity, and long-term
+          thinking become essential.
         </p>
         <p>
           I care about developer experience, architectural sustainability, and pragmatic AI-assisted
@@ -18,9 +19,9 @@ export function About() {
           move faster with confidence.
         </p>
         <p>
-          Today, I operate as an independent consultant, partnering with companies across Italian
-          and international markets to bring order, evolution, and structure to their frontend
-          ecosystems.
+          Today, I work independently, partnering with companies across Italian and international
+          markets to help evolve complex systems — starting from the frontend and shaping the
+          platforms that sustain them over time.
         </p>
       </Section.Reveal>
     </Section>

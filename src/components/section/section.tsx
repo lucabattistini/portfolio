@@ -40,11 +40,11 @@ type SectionProps = {
 
 export function Section({ name, children }: SectionProps) {
   return (
-    <section className="border-primary/30 relative flex h-min w-[67%] items-start justify-start gap-0 border-t pt-8 pb-30">
+    <section className="border-primary/30 relative flex flex-col items-start gap-8 border-t pt-8 pb-30 md:grid md:w-[67%] md:grid-cols-[1fr_2fr] md:gap-20">
       <h2 className="text-primary shrink-0 grow-4 basis-0 font-sans text-4xl font-semibold uppercase">
         {name}
       </h2>
-      <div className="text-primary relative flex h-min w-px shrink-0 grow-4 basis-0 flex-col gap-20 p-0 font-sans text-lg font-normal leading-6.5">
+      <div className="text-primary relative flex shrink-0 grow-4 basis-0 flex-col gap-20 p-0 font-sans text-lg leading-6.5 font-normal">
         {children}
       </div>
     </section>
