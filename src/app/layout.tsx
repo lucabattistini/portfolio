@@ -32,8 +32,8 @@ export default function RootLayout({
         <CursorProvider>
           <ParticlesProvider>
             <NavbarProvider>
-            <Cursor />
-            {children}
+              <Cursor />
+              {children}
             </NavbarProvider>
           </ParticlesProvider>
         </CursorProvider>
