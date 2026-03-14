@@ -1,1 +1,1 @@
-export * from './easingFunctions';
+export { splitWords, splitChars } from './split-text';

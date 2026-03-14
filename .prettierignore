@@ -1,2 +1,3 @@
-!.cz-config.js
-!.lintstagedrc.js
+# Ignore artifacts:
+build
+coverage
