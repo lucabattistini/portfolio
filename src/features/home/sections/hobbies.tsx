@@ -1,16 +1,16 @@
-import { useCursorActorRef } from '@/components/cursor/store';
+import { useInteraction } from '@/lib/hooks';
 import { Section } from '@/components/section';
 import Link from 'next/link';
 
 export function Hobbies() {
-  const cursorActor = useCursorActorRef();
+  const { hover, unhover } = useInteraction();
 
   const onPointerEnter = () => {
-    cursorActor.send({ type: 'HOVER' });
+    hover();
   };
 
   const onPointerLeave = () => {
-    cursorActor.send({ type: 'UNHOVER' });
+    unhover();
   };
 
   return (

@@ -4,20 +4,17 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense, useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import { ParticlesScene } from './scene';
-import { cn } from '@/lib/styles';
 import { useMobileDetect } from '@/lib/hooks';
 
 type ParticlesProps = {
   colorThreshold?: number;
   picture: string;
-  className?: string;
   isBlurred?: boolean;
 };
 
 export function Particles({
   colorThreshold = 34,
   picture,
-  className,
   isBlurred = false,
 }: ParticlesProps) {
   const isMobile = useMobileDetect();
@@ -54,7 +51,7 @@ export function Particles({
         className="pointer-events-none absolute top-0 left-0 h-screen w-px"
       />
       <motion.figure
-        className={cn('fixed top-0 left-0 h-full w-full', className)}
+        className="fixed top-0 left-0 h-full w-full"
         style={{ opacity }}
         animate={{ filter: isBlurred ? 'blur(16px)' : 'blur(0px)' }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}

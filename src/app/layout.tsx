@@ -3,6 +3,7 @@ import { Space_Grotesk, Bebas_Neue } from 'next/font/google';
 import { ParticlesProvider } from '@/components/particles';
 import { Cursor, CursorProvider } from '@/components/cursor';
 import { NavbarProvider } from '@/components/navbar';
+import { RouteResetHandler } from '@/components/route-reset-handler';
 import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -32,6 +33,7 @@ export default function RootLayout({
         <CursorProvider>
           <ParticlesProvider>
             <NavbarProvider>
+              <RouteResetHandler />
               <Cursor />
               {children}
             </NavbarProvider>
