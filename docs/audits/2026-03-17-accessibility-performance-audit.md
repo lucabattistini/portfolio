@@ -149,18 +149,76 @@
 
 ---
 
+## Scroll Performance (added post-Lenis integration)
+
+### 16. TouchTexture redraws + GPU upload every frame (High Impact)
+
+**File:** `src/components/particles/touch-texture.ts:97-112`
+
+- `update()` clears and redraws the entire 64x64 canvas **every frame** (60-120fps)
+- Sets `texture.needsUpdate = true` unconditionally, forcing a CPU-to-GPU texture upload every frame
+- This happens even when the trail array is empty and nothing visual changed
+- **Fix:** Short-circuit `update()` when `trail.length === 0`; only set `needsUpdate = true` when there are active trail points
+
+### 17. `filter: blur(0px)` keeps compositor layer active (Medium Impact)
+
+**Files:** `src/features/home/index.tsx:26-28, 52`
+
+- Both `<Particles>` wrapper and `<motion.article>` animate to `blur(0px)` when menu is closed
+- `filter: blur(0px)` still sets the CSS `filter` property, preventing the browser from removing the compositing layer
+- **Fix:** Use `filter: 'none'` instead of `'blur(0px)'` when menu is closed
+
+### 18. Parallax lerp never converges, keeps R3F render loop busy (Medium Impact)
+
+**File:** `src/components/particles/scene.tsx:136`
+
+- `MathUtils.lerp(groupRef.current.position.x, targetX, 0.08)` asymptotically approaches but never reaches target
+- Combined with a slow spring (`stiffness: 75, damping: 36, mass: 1.8, restDelta: 0.0005`), the R3F `useFrame` loop stays active for 50+ frames after scrolling stops
+- **Fix:** Add epsilon check: skip the lerp and snap to target when `Math.abs(current - target) < 0.01`
+
+### 19. `useIsBeyondFold` runs callback on every scroll frame (Low Impact)
+
+**File:** `src/lib/hooks/use-is-beyond-fold.ts:20`
+
+- `useMotionValueEvent(scrollY, 'change', ...)` fires on every scroll event
+- Calls `getViewportHeight()` (reads `window.visualViewport.height`) every time
+- React's same-value bailout prevents re-renders when the boolean doesn't change, so impact is low
+- **Fix (optional):** Replace with IntersectionObserver on a sentinel element at 1.25x viewport height — zero per-frame cost
+
+### 20. `new Color(0xffffff)` allocated on every render (Low Impact)
+
+**File:** `src/components/particles/scene.tsx:178`
+
+- `<meshBasicMaterial color={new Color(0xffffff)} />` creates a new Three.js Color object on every render
+- **Fix:** Hoist to a module-level constant
+
+### 21. Lenis `syncTouch: true` bypasses native scroll optimizations on mobile
+
+**File:** `src/components/smooth-scroll/smooth-scroll.tsx:28`
+
+- `syncTouch: true` makes Lenis intercept all touch events and run its own physics in JS
+- Native compositor-driven scroll and passive event listener fast paths are bypassed
+- Combined with R3F rendering particles on the main thread, this creates contention
+- **Note:** This was a deliberate choice for consistent UX — may need revisiting if mobile lag is noticeable
+
+---
+
 ## Summary
 
 | Priority     | Count | Key Areas                                                                          |
 | ------------ | ----- | ---------------------------------------------------------------------------------- |
 | Critical     | 3     | Mobile menu keyboard/a11y, skip-to-content link, canvas alt text                   |
 | Important    | 5     | Pointer-only effects, menu semantics, external link indicators, motion preferences |
+| Scroll Perf  | 6     | TouchTexture per-frame redraw, blur(0px) compositor, parallax lerp, syncTouch      |
 | Nice-to-have | 7     | Meta tags, bundle size, font/image perf, CWV                                       |
 
 **Recommended fix order:**
 
 1. Mobile menu focus trap + `aria-expanded` + Escape key (highest user impact)
-2. Skip-to-content link (quick win)
-3. Canvas `aria-label` or `<figcaption>` (quick win)
-4. OG/Twitter meta tags (SEO impact)
-5. Reduced motion for Section.Reveal and particles shader
+2. **TouchTexture short-circuit** — biggest single perf win, stops unnecessary GPU uploads every frame (#16)
+3. **`blur(0px)` → `'none'`** — quick win, removes unnecessary compositor layer (#17)
+4. **Parallax epsilon check** — stops R3F loop from running 50+ extra frames after scroll (#18)
+5. Skip-to-content link (quick win)
+6. Canvas `aria-label` or `<figcaption>` (quick win)
+7. OG/Twitter meta tags (SEO impact)
+8. Reduced motion for Section.Reveal and particles shader

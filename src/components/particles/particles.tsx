@@ -49,7 +49,7 @@ export function Particles({ colorThreshold = 34, picture, isBlurred = false }: P
       <motion.figure
         className="fixed top-0 left-0 h-full w-full"
         style={{ opacity }}
-        animate={{ filter: isBlurred ? 'blur(16px)' : 'blur(0px)' }}
+        animate={{ filter: isBlurred ? 'blur(16px)' : 'none' }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}
       >
         <Canvas
