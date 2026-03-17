@@ -2,6 +2,7 @@
 
 import * as motion from 'motion/react-client';
 import { type Variants } from 'motion/react';
+import { useLenis } from 'lenis/react';
 import { useIsBeyondFold, useInteraction } from '@/lib/hooks';
 import { cn } from '@/lib/styles';
 
@@ -18,6 +19,7 @@ const animation: Variants = {
 };
 
 export function NavAnchor() {
+  const lenis = useLenis();
   const isBeyondFold = useIsBeyondFold({ multiplier: 1.25 });
   const { hover, unhover } = useInteraction();
 
@@ -36,7 +38,11 @@ export function NavAnchor() {
   const onClick = () => {
     if (!isBeyondFold) return;
     unhover();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (lenis) {
+      lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
   };
 
   return (

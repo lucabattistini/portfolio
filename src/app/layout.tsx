@@ -3,7 +3,9 @@ import { Space_Grotesk, Bebas_Neue } from 'next/font/google';
 import { ParticlesProvider } from '@/components/particles';
 import { Cursor, CursorProvider } from '@/components/cursor';
 import { NavbarProvider } from '@/components/navbar';
+import { SmoothScroll } from '@/components/smooth-scroll';
 import { RouteResetHandler } from '@/components/route-reset-handler';
+import 'lenis/dist/lenis.css';
 import './globals.css';
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,15 +32,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${spaceGrotesk.variable} ${bebasNeue.variable} antialiased`}>
-        <CursorProvider>
-          <ParticlesProvider>
-            <NavbarProvider>
-              <RouteResetHandler />
-              <Cursor />
-              {children}
-            </NavbarProvider>
-          </ParticlesProvider>
-        </CursorProvider>
+        <SmoothScroll>
+          <CursorProvider>
+            <ParticlesProvider>
+              <NavbarProvider>
+                <RouteResetHandler />
+                <Cursor />
+                {children}
+              </NavbarProvider>
+            </ParticlesProvider>
+          </CursorProvider>
+        </SmoothScroll>
       </body>
     </html>
   );
