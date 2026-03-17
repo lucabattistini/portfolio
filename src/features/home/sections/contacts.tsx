@@ -2,10 +2,10 @@
 
 import { Section } from '@/components/section';
 import Link from 'next/link';
-import { useCopyToClipboard } from '@/lib/hooks';
+import { useCopyToClipboard, useInteraction } from '@/lib/hooks';
 import Copy from '@public/copy.svg';
 import CopyCheck from '@public/copy-check.svg';
-import { computeStuckCoordinates, useCursorActorRef } from '@/components/cursor';
+import { computeStuckCoordinates } from '@/components/cursor';
 
 const contacts = [
   {
@@ -49,24 +49,21 @@ const socials = [
 function CallToAction({ href, value, copy }: { href: string; value: string; copy?: boolean }) {
   const { copied, copyToClipboard } = useCopyToClipboard();
   const hasCopied = Boolean(copied);
-  const cursorActor = useCursorActorRef();
+  const { hover, unhover, stick, unstick } = useInteraction();
 
-  const onPointerEnter = (event: React.PointerEvent, stick?: boolean) => {
-    if (stick) {
-      cursorActor.send({
-        type: 'STICK',
-        position: computeStuckCoordinates(event.currentTarget.getBoundingClientRect()),
-      });
+  const onPointerEnter = (event: React.PointerEvent, shouldStick?: boolean) => {
+    if (shouldStick) {
+      stick(computeStuckCoordinates(event.currentTarget.getBoundingClientRect()));
     } else {
-      cursorActor.send({ type: 'HOVER' });
+      hover();
     }
   };
 
-  const onPointerLeave = (stick?: boolean) => {
-    if (stick) {
-      cursorActor.send({ type: 'UNSTICK' });
+  const onPointerLeave = (shouldStick?: boolean) => {
+    if (shouldStick) {
+      unstick();
     } else {
-      cursorActor.send({ type: 'UNHOVER' });
+      unhover();
     }
   };
 
@@ -104,14 +101,14 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
 }
 
 export function Contacts() {
-  const cursorActor = useCursorActorRef();
+  const { hover, unhover } = useInteraction();
 
   const onPointerEnter = () => {
-    cursorActor.send({ type: 'HOVER' });
+    hover();
   };
 
   const onPointerLeave = () => {
-    cursorActor.send({ type: 'UNHOVER' });
+    unhover();
   };
 
   return (

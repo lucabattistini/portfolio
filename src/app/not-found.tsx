@@ -5,8 +5,8 @@ export default function NotFound() {
   return (
     <>
       <main className="relative h-screen w-full">
-        <Particles picture="/me.png" className="blur-lg" />
-        <ErrorCode code="404" message="This page isn't available" />
+        <Particles picture="/me.png" isBlurred />
+        <ErrorCode code="404" message={`This page \nisn't available`} />
       </main>
     </>
   );

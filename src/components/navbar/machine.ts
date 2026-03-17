@@ -4,7 +4,7 @@ export type NavbarContext = {
   isMenuOpen: boolean;
 };
 
-export type NavbarEvent = { type: 'TOGGLE_MENU' };
+export type NavbarEvent = { type: 'TOGGLE_MENU' } | { type: 'CLOSE_MENU' };
 
 export function createNavbarMachine() {
   return createMachine({
@@ -25,6 +25,9 @@ export function createNavbarMachine() {
             actions: assign({
               isMenuOpen: ({ context }) => !context.isMenuOpen,
             }),
+          },
+          CLOSE_MENU: {
+            actions: assign({ isMenuOpen: false }),
           },
         },
       },

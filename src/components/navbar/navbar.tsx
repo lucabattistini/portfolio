@@ -4,8 +4,7 @@ import * as motion from 'motion/react-client';
 import { type Variants } from 'motion/react';
 import Link from 'next/link';
 import { Timezone } from './timezone';
-import { useCursorActorRef } from '../cursor';
-import { useMobileDetect } from '@/lib/hooks';
+import { useMobileDetect, useInteraction } from '@/lib/hooks';
 import { NavMenu } from './nav-menu';
 
 const animation: Variants = {
@@ -22,16 +21,14 @@ const animation: Variants = {
 
 export function Navbar() {
   const isMobile = useMobileDetect();
-  const cursorActor = useCursorActorRef();
+  const { hover, unhover } = useInteraction();
 
   const onPointerEnter = () => {
-    cursorActor.send({
-      type: 'HOVER',
-    });
+    hover();
   };
 
   const onPointerLeave = () => {
-    cursorActor.send({ type: 'UNHOVER' });
+    unhover();
   };
 
   return (

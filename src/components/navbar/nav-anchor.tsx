@@ -2,9 +2,8 @@
 
 import * as motion from 'motion/react-client';
 import { type Variants } from 'motion/react';
-import { useIsBeyondFold } from '@/lib/hooks';
+import { useIsBeyondFold, useInteraction } from '@/lib/hooks';
 import { cn } from '@/lib/styles';
-import { useCursorActorRef } from '../cursor';
 
 const animation: Variants = {
   hidden: { opacity: 0 },
@@ -20,25 +19,23 @@ const animation: Variants = {
 
 export function NavAnchor() {
   const isBeyondFold = useIsBeyondFold({ multiplier: 1.25 });
-  const cursorActor = useCursorActorRef();
+  const { hover, unhover } = useInteraction();
 
   const label = isBeyondFold ? 'Back to top' : 'Scroll';
 
   const onPointerEnter = () => {
     if (!isBeyondFold) return;
-    cursorActor.send({
-      type: 'HOVER',
-    });
+    hover();
   };
 
   const onPointerLeave = () => {
     if (!isBeyondFold) return;
-    cursorActor.send({ type: 'UNHOVER' });
+    unhover();
   };
 
   const onClick = () => {
     if (!isBeyondFold) return;
-    cursorActor.send({ type: 'UNHOVER' });
+    unhover();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

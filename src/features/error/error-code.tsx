@@ -2,11 +2,10 @@
 
 import * as motion from 'motion/react-client';
 import { type Variants } from 'motion/react';
-import { useCursorActorRef } from '@/components/cursor/store';
 import Link from 'next/link';
 import { splitWords } from '@/lib/utils';
 import { Fragment } from 'react/jsx-runtime';
-import { useParticlesActorRef } from '@/components/particles';
+import { useInteraction } from '@/lib/hooks';
 
 const codeAnimation: Variants = {
   hidden: { opacity: 0, y: 12 },
@@ -62,19 +61,14 @@ type ErrorCodeProps = {
 
 export function ErrorCode({ code, message }: ErrorCodeProps) {
   const { source, lines } = splitWords(message);
-  const cursorActor = useCursorActorRef();
-  const particlesActor = useParticlesActorRef();
+  const { hover, unhover } = useInteraction();
 
   const onPointerEnter = () => {
-    cursorActor.send({
-      type: 'HOVER',
-    });
-    particlesActor.send({ type: 'EXPLODE' });
+    hover();
   };
 
   const onPointerLeave = () => {
-    cursorActor.send({ type: 'UNHOVER' });
-    particlesActor.send({ type: 'REPAIR' });
+    unhover();
   };
 
   return (
