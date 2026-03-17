@@ -27,3 +27,7 @@ pnpm dev
 | `pnpm build`  | Production build                |
 | `pnpm lint`   | ESLint + TypeScript type-check  |
 | `pnpm format` | Prettier (with Tailwind plugin) |
+
+## Credits
+
+The interactive particle portrait is heavily inspired by [brunoimbrizi/interactive-particles](https://github.com/brunoimbrizi/interactive-particles).
