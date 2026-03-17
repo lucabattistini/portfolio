@@ -12,11 +12,7 @@ type ParticlesProps = {
   isBlurred?: boolean;
 };
 
-export function Particles({
-  colorThreshold = 34,
-  picture,
-  isBlurred = false,
-}: ParticlesProps) {
+export function Particles({ colorThreshold = 34, picture, isBlurred = false }: ParticlesProps) {
   const isMobile = useMobileDetect();
   const shouldReduceMotion = useReducedMotion();
   const parallaxEnabled = !isMobile && !shouldReduceMotion;

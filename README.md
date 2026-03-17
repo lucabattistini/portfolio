@@ -21,9 +21,9 @@ pnpm dev
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start dev server (Turbopack) |
-| `pnpm build` | Production build |
-| `pnpm lint` | ESLint + TypeScript type-check |
+| Command       | Description                     |
+| ------------- | ------------------------------- |
+| `pnpm dev`    | Start dev server (Turbopack)    |
+| `pnpm build`  | Production build                |
+| `pnpm lint`   | ESLint + TypeScript type-check  |
 | `pnpm format` | Prettier (with Tailwind plugin) |
