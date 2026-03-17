@@ -1,9 +1,11 @@
 import * as motion from 'motion/react-client';
 import Link from 'next/link';
+import { useLenis } from 'lenis/react';
 import { useNavbarActorRef, useNavbarSelector } from './store';
 import { Timezone } from './timezone';
 import { type Variants } from 'motion/react';
 import { splitWords } from '@/lib/utils';
+import { useEffect } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
 const parentAnimation: Variants = {
@@ -41,8 +43,18 @@ const liAnimation: Variants = {
 };
 
 export function NavMenu() {
+  const lenis = useLenis();
   const actorRef = useNavbarActorRef();
   const { isMenuOpen } = useNavbarSelector((snapshot) => snapshot.context);
+
+  useEffect(() => {
+    if (!lenis) return;
+    if (isMenuOpen) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [lenis, isMenuOpen]);
 
   const label = isMenuOpen ? 'Close' : 'Menu';
 
