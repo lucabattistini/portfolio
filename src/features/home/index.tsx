@@ -24,7 +24,7 @@ export function Home() {
 
       <Particles picture="/me.png" isBlurred={isMenuOpen} />
       <motion.article
-        animate={{ filter: isMenuOpen ? 'blur(16px)' : 'blur(0px)' }}
+        animate={{ filter: isMenuOpen ? 'blur(16px)' : 'none' }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}
         className="pointer-events-none relative w-full md:max-w-384"
       >

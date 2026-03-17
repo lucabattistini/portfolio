@@ -18,6 +18,8 @@ import { usePoints } from './use-points';
 import { useParticlesActorRef, useParticlesSelector } from './store';
 import { getTextureImage } from './texture-image';
 
+const WHITE = new Color(0xffffff);
+
 export type ParticlesSceneProps = {
   colorThreshold?: number;
   picture: string;
@@ -133,7 +135,9 @@ export function ParticlesScene({
       const clampedProgress = Math.min(1, Math.max(0, smoothProgress.get()));
       const targetX = clampedProgress * viewportWidth * (pan?.fraction ?? 0);
 
-      groupRef.current.position.x = MathUtils.lerp(groupRef.current.position.x, targetX, 0.08);
+      const currentX = groupRef.current.position.x;
+      groupRef.current.position.x =
+        Math.abs(currentX - targetX) < 0.01 ? targetX : MathUtils.lerp(currentX, targetX, 0.08);
     }
 
     if (points.status === 'ready' && meshRef.current && meshRef.current.material.uniforms) {
@@ -173,7 +177,7 @@ export function ParticlesScene({
 
         <mesh scale={[scale, scale, 1]} onPointerMove={handleOnMove}>
           <meshBasicMaterial
-            color={new Color(0xffffff)}
+            color={WHITE}
             depthTest={false}
             visible={false}
             wireframe={false}

@@ -27,6 +27,7 @@ export function createTouchTexture(): TouchTexture {
   const maxAge = 120;
   const radius = 0.15;
   const trail: Trail[] = [];
+  let dirty = false;
 
   const canvas = document.createElement('canvas');
   canvas.width = canvas.height = size;
@@ -95,6 +96,8 @@ export function createTouchTexture(): TouchTexture {
   };
 
   const update = () => {
+    if (trail.length === 0 && !dirty) return;
+
     clear();
 
     trail.forEach((point, i) => {
@@ -109,6 +112,7 @@ export function createTouchTexture(): TouchTexture {
       draw(point);
     });
 
+    dirty = trail.length > 0;
     texture.needsUpdate = true;
   };
 
