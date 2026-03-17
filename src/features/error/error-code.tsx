@@ -61,16 +61,14 @@ type ErrorCodeProps = {
 
 export function ErrorCode({ code, message }: ErrorCodeProps) {
   const { source, lines } = splitWords(message);
-  const { hover, unhover, explode, repair } = useInteraction();
+  const { hover, unhover } = useInteraction();
 
   const onPointerEnter = () => {
     hover();
-    explode();
   };
 
   const onPointerLeave = () => {
     unhover();
-    repair();
   };
 
   return (

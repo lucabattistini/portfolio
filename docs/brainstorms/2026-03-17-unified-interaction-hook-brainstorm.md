@@ -15,7 +15,7 @@ A single hook that coordinates the cursor and particles XState actors, replacing
 - `reset()` — resets both machines to clean state (UNSTICK, UNHOVER, REPAIR, etc.)
 - `show()` / `hide()` — sends SHOW/HIDE to both actors
 
-**Key decision:** STICK always triggers EXPLODE. These are treated as a single interaction.
+**Key decision:** HOVER always triggers EXPLODE, UNHOVER always triggers REPAIR. Stick/unstick only affects the cursor.
 
 ### 2. Route-Change Reset
 
@@ -54,7 +54,7 @@ Output: An audit report with findings and priorities. Fixes happen separately.
 
 ## Key Decisions
 
-1. **STICK = EXPLODE** — These events are always paired. `unstick()` sends REPAIR.
+1. **HOVER = EXPLODE** — These events are always paired. `unhover()` sends REPAIR. Stick/unstick only affects cursor.
 2. **Hook lives in `src/lib/hooks/`** — Alongside existing hooks, exported via barrel.
 3. **Touch texture stays internal** — The Three.js pointer-to-UV mouse tracking remains encapsulated in the particles scene. The hook only handles discrete events.
 4. **Reset is general-purpose** — Built to work with future pages, not just home ↔ 404.

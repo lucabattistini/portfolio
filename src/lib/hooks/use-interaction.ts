@@ -11,16 +11,20 @@ export function useInteraction() {
   const navbarActor = useNavbarActorRef();
 
   return {
-    hover: () => cursorActor.send({ type: 'HOVER' }),
-    unhover: () => cursorActor.send({ type: 'UNHOVER' }),
+    hover: () => {
+      cursorActor.send({ type: 'HOVER' });
+      particlesActor.send({ type: 'EXPLODE' });
+    },
+    unhover: () => {
+      cursorActor.send({ type: 'UNHOVER' });
+      particlesActor.send({ type: 'REPAIR' });
+    },
 
     stick: (position: CursorPosition) => {
       cursorActor.send({ type: 'STICK', position });
-      particlesActor.send({ type: 'EXPLODE' });
     },
     unstick: () => {
       cursorActor.send({ type: 'UNSTICK' });
-      particlesActor.send({ type: 'REPAIR' });
     },
 
     explode: () => particlesActor.send({ type: 'EXPLODE' }),
