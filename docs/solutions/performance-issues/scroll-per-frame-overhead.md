@@ -58,9 +58,7 @@ animate={{ filter: isBlurred ? 'blur(16px)' : 'none' }}
 ```typescript
 const currentX = groupRef.current.position.x;
 groupRef.current.position.x =
-  Math.abs(currentX - targetX) < 0.01
-    ? targetX
-    : MathUtils.lerp(currentX, targetX, 0.08);
+  Math.abs(currentX - targetX) < 0.01 ? targetX : MathUtils.lerp(currentX, targetX, 0.08);
 ```
 
 Note: R3F `useFrame` still runs every frame (it also updates `uTime`), so this only saves the lerp math, not the frame itself.
