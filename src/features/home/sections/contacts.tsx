@@ -38,7 +38,7 @@ const socials = [
   },
   {
     name: 'Bluesky',
-    url: 'https://bsky.app/profile/lucaba-ttistini.bsky.social',
+    url: 'https://bsky.app/profile/luca-battistini.bsky.social',
   },
   {
     name: 'X',

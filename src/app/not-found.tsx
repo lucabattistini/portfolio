@@ -1,5 +1,11 @@
+import type { Metadata } from 'next';
 import { Particles } from '@/components/particles';
 import { ErrorCode } from '@/features/error';
+
+export const metadata: Metadata = {
+  title: 'Page Not Found',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   return (
