@@ -36,12 +36,19 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: '/opengraph-image.png',
+        alt: siteConfig.title,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: siteConfig.title,
     description: siteConfig.description,
     creator: '@lucabattistini_',
+    images: ['/opengraph-image.png'],
   },
   alternates: {
     canonical: siteConfig.url,
