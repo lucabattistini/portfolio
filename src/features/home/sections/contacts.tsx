@@ -2,7 +2,7 @@
 
 import { Section } from '@/components/section';
 import Link from 'next/link';
-import { useCopyToClipboard, useInteraction } from '@/lib/hooks';
+import { useCopyToClipboard, useHaptics, useInteraction } from '@/lib/hooks';
 import Copy from '@public/copy.svg';
 import CopyCheck from '@public/copy-check.svg';
 import { computeStuckCoordinates } from '@/components/cursor';
@@ -50,6 +50,7 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
   const { copied, copyToClipboard } = useCopyToClipboard();
   const hasCopied = Boolean(copied);
   const { hover, unhover, stick, unstick } = useInteraction();
+  const { trigger } = useHaptics();
 
   const onPointerEnter = (event: React.PointerEvent, shouldStick?: boolean) => {
     if (shouldStick) {
@@ -75,6 +76,7 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
           href={href}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trigger('nudge')}
           onPointerEnter={onPointerEnter}
           onPointerLeave={() => onPointerLeave()}
         >
@@ -83,7 +85,10 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
       </h3>
       {copy && (
         <button
-          onClick={() => copyToClipboard(value)}
+          onClick={() => {
+            copyToClipboard(value);
+            trigger('success');
+          }}
           type="button"
           className="text-primary hover:text-accent pointer-events-auto flex cursor-pointer items-center gap-2 text-xs transition"
           onPointerEnter={(event) => onPointerEnter(event, true)}
@@ -102,6 +107,7 @@ function CallToAction({ href, value, copy }: { href: string; value: string; copy
 
 export function Contacts() {
   const { hover, unhover } = useInteraction();
+  const { trigger } = useHaptics();
 
   const onPointerEnter = () => {
     hover();
@@ -131,6 +137,7 @@ export function Contacts() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => trigger('nudge')}
                     onPointerEnter={onPointerEnter}
                     onPointerLeave={onPointerLeave}
                   >

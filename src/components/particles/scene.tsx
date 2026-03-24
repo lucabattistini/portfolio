@@ -17,6 +17,7 @@ import { type MotionValue, useMotionValue, useSpring } from 'motion/react';
 import { usePoints } from './use-points';
 import { useParticlesActorRef, useParticlesSelector } from './store';
 import { getTextureImage } from './texture-image';
+import { useHaptics } from '@/lib/hooks';
 
 const WHITE = new Color(0xffffff);
 
@@ -38,6 +39,7 @@ export function ParticlesScene({
 }: ParticlesSceneProps) {
   const actorRef = useParticlesActorRef();
   const { isVisible, isExploded } = useParticlesSelector((snapshot) => snapshot.context);
+  const { trigger } = useHaptics();
   const texture = useTexture(picture);
   const image = getTextureImage(texture);
   const groupRef = useRef<Group | null>(null);
@@ -81,6 +83,10 @@ export function ParticlesScene({
   }, [points, actorRef]);
 
   useEffect(() => {
+    if (isVisible) {
+      trigger('nudge');
+    }
+
     const baseDuration = 0.9;
 
     const uSizeAnimation = animate(uSize.get(), isVisible ? 1.05 : 0.5, {
@@ -106,7 +112,7 @@ export function ParticlesScene({
       uRandomAnimation.stop();
       uDepthAnimation.stop();
     };
-  }, [isVisible, uDepth, uRandom, uSize]);
+  }, [isVisible, uDepth, uRandom, uSize, trigger]);
 
   useEffect(() => {
     const baseDuration = 0.9;
