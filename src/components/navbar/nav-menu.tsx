@@ -5,6 +5,7 @@ import { useNavbarActorRef, useNavbarSelector } from './store';
 import { Timezone } from './timezone';
 import { type Variants } from 'motion/react';
 import { splitWords } from '@/lib/utils';
+import { useHaptics } from '@/lib/hooks';
 import { useEffect } from 'react';
 import { Fragment } from 'react/jsx-runtime';
 
@@ -45,6 +46,7 @@ const liAnimation: Variants = {
 export function NavMenu() {
   const lenis = useLenis();
   const actorRef = useNavbarActorRef();
+  const { trigger } = useHaptics();
   const { isMenuOpen } = useNavbarSelector((snapshot) => snapshot.context);
 
   useEffect(() => {
@@ -67,7 +69,10 @@ export function NavMenu() {
       <div className="relative z-20 flex w-1/4 justify-end">
         <button
           className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
-          onClick={() => actorRef.send({ type: 'TOGGLE_MENU' })}
+          onClick={() => {
+            actorRef.send({ type: 'TOGGLE_MENU' });
+            trigger('nudge');
+          }}
         >
           {label}
         </button>

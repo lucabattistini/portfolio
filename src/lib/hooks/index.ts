@@ -3,3 +3,4 @@ export { useIsBeyondFold } from './use-is-beyond-fold';
 export { useMouse, type MousePosition } from './use-mouse';
 export { useCopyToClipboard } from './use-copy-to-clipboard';
 export { useInteraction } from './use-interaction';
+export { useHaptics } from './use-haptics';
