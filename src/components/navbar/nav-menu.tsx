@@ -106,7 +106,7 @@ export function NavMenu() {
             </motion.p>
             <ul className="relative flex flex-col">
               <motion.li variants={liAnimation} initial="hidden" animate="show">
-                <Link
+                <a
                   className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
                   href="/resume.pdf"
                   download
@@ -114,7 +114,7 @@ export function NavMenu() {
                   rel="noopener noreferrer"
                 >
                   Download Resume
-                </Link>
+                </a>
               </motion.li>
               <motion.li variants={liAnimation} initial="hidden" animate="show">
                 <Link
