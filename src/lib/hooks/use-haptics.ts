@@ -2,27 +2,27 @@
 
 import { useWebHaptics } from 'web-haptics/react';
 import { useReducedMotion } from 'motion/react';
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 
 const COOLDOWN_MS = 200;
 
 export function useHaptics() {
-  const { trigger, cancel, isSupported } = useWebHaptics({
+  const { trigger, cancel } = useWebHaptics({
     debug: process.env.NODE_ENV === 'development',
   });
   const reducedMotion = useReducedMotion();
   const lastTriggerRef = useRef(0);
 
-  const throttledTrigger = useCallback(
-    (preset?: string) => {
-      if (reducedMotion || !isSupported) return;
-      const now = Date.now();
-      if (now - lastTriggerRef.current < COOLDOWN_MS) return;
-      lastTriggerRef.current = now;
-      trigger(preset);
-    },
-    [trigger, reducedMotion, isSupported],
-  );
+  const throttledTrigger = (preset?: string) => {
+    if (reducedMotion) return;
 
-  return { trigger: throttledTrigger, cancel, isSupported };
+    const now = Date.now();
+
+    if (now - lastTriggerRef.current < COOLDOWN_MS) return;
+
+    lastTriggerRef.current = now;
+    trigger(preset);
+  };
+
+  return { trigger: throttledTrigger, cancel };
 }
