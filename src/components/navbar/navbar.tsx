@@ -78,7 +78,7 @@ export function Navbar() {
         <div className="relative flex w-1/4 justify-between">
           <ul className="relative flex flex-col">
             <li>
-              <Link
+              <a
                 className="text-primary hover:text-accent font-sans text-xl font-bold transition select-none"
                 href="/resume.pdf"
                 download
@@ -88,7 +88,7 @@ export function Navbar() {
                 onPointerLeave={onPointerLeave}
               >
                 Download Resume
-              </Link>
+              </a>
             </li>
             <li>
               <Link
