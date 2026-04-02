@@ -26,12 +26,12 @@ const wordAnimation: Variants = {
 };
 
 const START_YEAR = 2016;
-const END_YEAR = new Date().getFullYear();
 
 export function Seniority() {
+  const endYear = new Date().getFullYear();
   const seniority =
-    (END_YEAR - START_YEAR) % 10 === 0 ? `${END_YEAR - START_YEAR} yrs exp.` : '10+ yrs exp.';
-  const { source, lines } = splitWords(`${START_YEAR}→${END_YEAR}\n${seniority}`);
+    (endYear - START_YEAR) % 10 === 0 ? `${endYear - START_YEAR} yrs exp.` : '10+ yrs exp.';
+  const { source, lines } = splitWords(`${START_YEAR}→${endYear}\n${seniority}`);
 
   return (
     <motion.h2
