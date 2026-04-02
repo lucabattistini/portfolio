@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useInteraction } from '@/lib/hooks';
 
-export function RouteResetHandler() {
+export function InteractionResetHandler() {
   const pathname = usePathname();
   const prevPathnameRef = useRef<string | null>(null);
   const { reset } = useInteraction();

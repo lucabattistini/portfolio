@@ -4,7 +4,7 @@ import { ParticlesProvider } from '@/components/particles';
 import { Cursor, CursorProvider } from '@/components/cursor';
 import { NavbarProvider } from '@/components/navbar';
 import { SmoothScroll } from '@/components/smooth-scroll';
-import { RouteResetHandler } from '@/components/route-reset-handler';
+import { InteractionResetHandler } from '@/components/interaction-reset-handler/';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { siteConfig } from '@/lib/site';
@@ -73,7 +73,7 @@ export default function RootLayout({
           <CursorProvider>
             <ParticlesProvider>
               <NavbarProvider>
-                <RouteResetHandler />
+                <InteractionResetHandler />
                 <Cursor />
                 {children}
               </NavbarProvider>
